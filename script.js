@@ -7,6 +7,12 @@
 // Altere aqui para definir a senha de acesso
 const SENHA_EXCLUSIVIDADES = 'Exclusive00';
 
+// ── LOADING SCREEN ──
+const loader = document.getElementById('loader');
+window.addEventListener('load', () => {
+  setTimeout(() => loader.classList.add('hide'), 2600);
+});
+
 // ── NAVBAR SCROLL ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
