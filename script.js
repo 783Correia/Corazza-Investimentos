@@ -229,9 +229,12 @@ const counterObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
 
-// ── HERO PARALLAX ──
+// ── HERO PARALLAX (desktop only) ──
 const heroImg = document.querySelector('.hero-img');
-if (heroImg) {
+const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (heroImg && !isTouch && !prefersReducedMotion) {
   window.addEventListener('scroll', () => {
     const scrolled = window.scrollY;
     if (scrolled < window.innerHeight) {

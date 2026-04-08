@@ -80,6 +80,17 @@ ul { list-style: none; }
 .section-sub.center { text-align: center; margin: 0 auto 3rem; }
 
 /* ── BUTTONS ── */
+.btn-primary,
+.btn-ghost,
+.btn-nav,
+.btn-card,
+.hamburger,
+.modal-close,
+.back-to-top,
+.whatsapp-float {
+  touch-action: manipulation;
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -220,6 +231,7 @@ ul { list-style: none; }
 .hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -1041,10 +1053,13 @@ ul { list-style: none; }
     z-index: 999;
   }
   .nav-links.open a { font-size: 1.2rem; }
+  /* Hero */
   .hero-title { font-size: clamp(2.5rem, 10vw, 4rem); }
-  .hero-stats-inner { flex-wrap: wrap; gap: 1.5rem; }
+  .hero-content { padding-bottom: 6rem; } /* espaço para stats absoluta no bottom */
+  .hero-stats-inner { flex-wrap: wrap; gap: 1.25rem; padding: 1.25rem 1.5rem; }
   .stat-divider { display: none; }
-  .scroll-hint { bottom: 7rem; }
+  .scroll-hint { display: none; }
+  /* Seções */
   .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
   .sobre-badge { bottom: 1rem; right: 1rem; }
   .processo-grid { grid-template-columns: 1fr; }
@@ -1056,7 +1071,6 @@ ul { list-style: none; }
   .contato-grid { grid-template-columns: 1fr; gap: 3rem; }
   .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
   .footer-bottom { flex-direction: column; text-align: center; }
-  .scroll-hint { display: none; }
   .excl-header-inner { flex-direction: column; align-items: flex-start; }
 }
 
