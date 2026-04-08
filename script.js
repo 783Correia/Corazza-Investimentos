@@ -10,7 +10,7 @@ const SENHA_EXCLUSIVIDADES = 'Exclusive00';
 // ── LOADING SCREEN ──
 const loader = document.getElementById('loader');
 window.addEventListener('load', () => {
-  setTimeout(() => loader.classList.add('hide'), 2600);
+  setTimeout(() => loader.classList.add('hide'), 850);
 });
 
 // ── NAVBAR SCROLL ──
