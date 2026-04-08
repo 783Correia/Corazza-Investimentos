@@ -1041,3 +1041,85 @@ ul { list-style: none; }
   .hero-ctas { flex-direction: column; align-items: flex-start; }
   .excl-financeiro { grid-template-columns: 1fr; }
 }
+
+/* ── HERO ENTRANCE ANIMATION ── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-anim {
+  opacity: 0;
+  animation: heroFadeUp 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+/* ── EXCLUSIVIDADES SMOOTH REVEAL ── */
+@keyframes revealArea {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.exclusividades-area[style*="display: block"],
+.exclusividades-area[style*="display:block"] {
+  animation: revealArea 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+/* ── WHATSAPP FLOAT ── */
+.whatsapp-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 997;
+  background: #25D366;
+  color: #fff;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  animation: waPulse 2.5s ease-in-out infinite;
+}
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(37,211,102,0.65);
+  animation: none;
+}
+@keyframes waPulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+  50%      { box-shadow: 0 4px 32px rgba(37,211,102,0.75), 0 0 0 8px rgba(37,211,102,0.1); }
+}
+
+/* ── BACK TO TOP ── */
+.back-to-top {
+  position: fixed;
+  bottom: 6.5rem;
+  right: 2.15rem;
+  z-index: 996;
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  pointer-events: none;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.back-to-top:hover { border-color: var(--gold-light); color: var(--gold-light); }
+
+@media (max-width: 480px) {
+  .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 52px; height: 52px; }
+  .back-to-top { bottom: 5.5rem; right: 1.4rem; }
+}
