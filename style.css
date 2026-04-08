@@ -1080,6 +1080,27 @@ ul { list-style: none; }
   .excl-financeiro { grid-template-columns: 1fr; }
 }
 
+/* ── GRAIN TEXTURE ── */
+body::after {
+  content: '';
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+  animation: grain 0.6s steps(1) infinite;
+}
+@keyframes grain {
+  0%  { transform: translate(0,0); }
+  20% { transform: translate(-2%,-3%); }
+  40% { transform: translate(3%,1%); }
+  60% { transform: translate(-1%,4%); }
+  80% { transform: translate(2%,-2%); }
+}
+
 /* ── HERO ENTRANCE ANIMATION ── */
 @keyframes heroFadeUp {
   from { opacity: 0; transform: translateY(28px); }
@@ -1088,6 +1109,13 @@ ul { list-style: none; }
 .hero-anim {
   opacity: 0;
   animation: heroFadeUp 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+/* Split por linha no título */
+.hero-line {
+  display: inline-block;
+  opacity: 0;
+  animation: heroFadeUp 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
   animation-delay: var(--delay, 0s);
 }
 
@@ -1157,7 +1185,196 @@ ul { list-style: none; }
 }
 .back-to-top:hover { border-color: var(--gold-light); color: var(--gold-light); }
 
+/* ── SOBRE — ELEMENTO DECORATIVO ── */
+.sobre-img-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: -14px;
+  width: 55%;
+  height: 55%;
+  border: 1px solid var(--gold);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+.sobre-img { position: relative; z-index: 1; }
+
+/* ── PROCESSO — LINHA CONECTORA ── */
+.processo-grid { position: relative; }
+.processo-grid::after {
+  content: '';
+  position: absolute;
+  top: 3.2rem;
+  left: 2rem;
+  right: 2rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent 0%, var(--gold-dark) 15%, var(--border) 50%, var(--gold-dark) 85%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+.processo-item { position: relative; z-index: 1; }
+
+/* ── CARD IMAGE HEIGHT ── */
+.inv-card-img { height: 280px; }
+
+/* ── CTA FINAL — OVERLAY MENOS ESCURO ── */
+.cta-overlay { background: rgba(10,10,10,0.55); }
+
+/* ── PARCEIROS — CARDS MAIS ROBUSTOS ── */
+.parceiros-grid { gap: 1.25rem; }
+.parceiro-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.5rem 2rem;
+  min-width: 200px;
+}
+.parceiro-nome { font-size: 14px; font-weight: 500; color: var(--white); }
+.parceiro-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+/* ── DEPOIMENTOS ── */
+.depoimentos {
+  padding: 8rem 0;
+  background: var(--black);
+  border-top: 1px solid var(--border-dim);
+  border-bottom: 1px solid var(--border-dim);
+}
+.dep-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.dep-card {
+  background: var(--dark2);
+  border: 1px solid var(--border-dim);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  transition: var(--transition);
+}
+.dep-card:hover { border-color: var(--border); transform: translateY(-3px); }
+.dep-card.featured { border-color: var(--gold); }
+.dep-quote {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--white-dim);
+  line-height: 1.8;
+  flex: 1;
+  position: relative;
+  padding-top: 1.5rem;
+}
+.dep-quote::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: -0.25rem;
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  color: var(--gold);
+  opacity: 0.5;
+  line-height: 1;
+}
+.dep-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--border-dim);
+  padding-top: 1.5rem;
+}
+.dep-initial {
+  width: 44px;
+  height: 44px;
+  background: var(--gold);
+  color: var(--black);
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.dep-name { font-size: 14px; font-weight: 500; color: var(--white); }
+.dep-role { font-size: 11px; color: var(--gray); letter-spacing: 0.04em; margin-top: 0.2rem; }
+
+/* ── FLOATING LABELS ── */
+.form-group.floating { position: relative; }
+.form-group.floating label {
+  position: absolute;
+  top: 0.85rem;
+  left: 1rem;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--gray);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  background: transparent;
+  z-index: 1;
+}
+.form-group.floating input:focus ~ label,
+.form-group.floating input:not(:placeholder-shown) ~ label,
+.form-group.floating textarea:focus ~ label,
+.form-group.floating textarea:not(:placeholder-shown) ~ label {
+  top: -0.55rem;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--dark3);
+  padding: 0 0.3rem;
+}
+.form-group.floating input:focus,
+.form-group.floating textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(201,169,110,0.2);
+}
+
+/* ── STICKY MOBILE CTA ── */
+.mobile-cta-bar { display: none; }
+
+@media (max-width: 768px) {
+  .mobile-cta-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 995;
+    background: var(--gold);
+    padding: 1rem 1.5rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    touch-action: manipulation;
+  }
+  .mobile-cta-link {
+    color: var(--black);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+  }
+  /* Empurra botões flutuantes acima da barra */
+  .whatsapp-float { bottom: 5rem; }
+  .back-to-top { bottom: 9rem; right: 1.25rem; }
+  /* Espaço no footer para não cobrir */
+  .footer { padding-bottom: 6rem; }
+  /* Depoimentos */
+  .dep-grid { grid-template-columns: 1fr; }
+  /* Processo linha some no mobile */
+  .processo-grid::after { display: none; }
+  /* Sobre decorativo some no mobile */
+  .sobre-img-wrap::after { display: none; }
+}
+
 @media (max-width: 480px) {
-  .whatsapp-float { bottom: 1.25rem; right: 1.25rem; width: 52px; height: 52px; }
-  .back-to-top { bottom: 5.5rem; right: 1.4rem; }
+  .whatsapp-float { right: 1.25rem; width: 52px; height: 52px; }
 }

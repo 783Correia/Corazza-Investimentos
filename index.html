@@ -64,7 +64,10 @@
     </div>
     <div class="hero-content">
       <p class="hero-eyebrow hero-anim" style="--delay:0s">Assessoria Imobiliária de Alto Padrão</p>
-      <h1 class="hero-title hero-anim" style="--delay:0.15s">INVESTIMENTO<br /><em>ESTRATÉGICO</em></h1>
+      <h1 class="hero-title">
+        <span class="hero-line" style="--delay:0.15s">INVESTIMENTO</span><br />
+        <em class="hero-line" style="--delay:0.35s">ESTRATÉGICO</em>
+      </h1>
       <p class="hero-sub hero-anim" style="--delay:0.3s">Curadoria exclusiva de ativos imobiliários no litoral catarinense.<br />Patrimônio construído com inteligência.</p>
       <div class="hero-ctas hero-anim" style="--delay:0.45s">
         <a href="#contato" class="btn-primary">Iniciar conversa</a>
@@ -245,19 +248,63 @@
       <div class="parceiros-grid">
         <div class="parceiro-item">
           <span class="parceiro-icon">◆</span>
-          <span>AS Ramos Empreendimentos</span>
+          <span class="parceiro-nome">AS Ramos Empreendimentos</span>
+          <span class="parceiro-desc">Alto padrão residencial no litoral catarinense</span>
         </div>
         <div class="parceiro-item">
           <span class="parceiro-icon">◆</span>
-          <span>Eccel Construtora</span>
+          <span class="parceiro-nome">Eccel Construtora</span>
+          <span class="parceiro-desc">Inovação e tecnologia construtiva</span>
         </div>
         <div class="parceiro-item">
           <span class="parceiro-icon">◆</span>
-          <span>Vokkan</span>
+          <span class="parceiro-nome">Vokkan</span>
+          <span class="parceiro-desc">Empreendimentos corporativos e multiuso</span>
         </div>
         <div class="parceiro-item">
           <span class="parceiro-icon">◆</span>
-          <span>Em breve</span>
+          <span class="parceiro-nome">Em breve</span>
+          <span class="parceiro-desc">Novos parceiros estratégicos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="depoimentos" id="depoimentos">
+    <div class="container">
+      <p class="section-eyebrow center">Quem já investiu</p>
+      <h2 class="section-title center">Depoimentos</h2>
+      <div class="dep-grid">
+        <div class="dep-card">
+          <p class="dep-quote">O Dieison nos apresentou o Palazzo Giardino antes de qualquer divulgação pública. Assessoria séria, transparente e personalizada. Exatamente o que esperamos de um parceiro de investimento.</p>
+          <div class="dep-author">
+            <div class="dep-initial">C</div>
+            <div>
+              <p class="dep-name">Carlos M.</p>
+              <p class="dep-role">Empresário · Balneário Camboriú</p>
+            </div>
+          </div>
+        </div>
+        <div class="dep-card featured">
+          <p class="dep-quote">Atendimento consultivo de verdade. O Dieison entende o perfil do investidor e indica o ativo certo, não o mais caro. Já indiquei a assessoria para três sócios.</p>
+          <div class="dep-author">
+            <div class="dep-initial">F</div>
+            <div>
+              <p class="dep-name">Fernanda R.</p>
+              <p class="dep-role">Médica · Florianópolis</p>
+            </div>
+          </div>
+        </div>
+        <div class="dep-card">
+          <p class="dep-quote">Comprei minha primeira sala comercial pelo Dieison. Processo simples, seguro, e o retorno veio antes do prazo esperado. Referência absoluta no litoral catarinense.</p>
+          <div class="dep-author">
+            <div class="dep-initial">R</div>
+            <div>
+              <p class="dep-name">Ricardo L.</p>
+              <p class="dep-role">Investidor · São Paulo</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -357,13 +404,13 @@
           </div>
         </div>
         <form class="contato-form" id="contatoForm">
-          <div class="form-group">
+          <div class="form-group floating">
+            <input type="text" id="nome" name="nome" placeholder=" " required />
             <label for="nome">Nome completo</label>
-            <input type="text" id="nome" name="nome" placeholder="Seu nome" required />
           </div>
-          <div class="form-group">
+          <div class="form-group floating">
+            <input type="tel" id="whatsapp" name="whatsapp" placeholder=" " required />
             <label for="whatsapp">WhatsApp</label>
-            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required />
           </div>
           <div class="form-group">
             <label for="interesse">Interesse</label>
@@ -375,9 +422,9 @@
               <option value="parceria">Parceria</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-group floating">
+            <textarea id="mensagem" name="mensagem" rows="3" placeholder=" "></textarea>
             <label for="mensagem">Mensagem (opcional)</label>
-            <textarea id="mensagem" name="mensagem" rows="3" placeholder="Conte um pouco sobre seus objetivos..."></textarea>
           </div>
           <button type="submit" class="btn-primary btn-full">Enviar mensagem</button>
         </form>
@@ -583,6 +630,11 @@
 
       </div>
     </div>
+  </div>
+
+  <!-- STICKY MOBILE CTA -->
+  <div class="mobile-cta-bar">
+    <a href="https://wa.me/5547992762266?text=Ol%C3%A1%20Dieison%2C%20vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20investimentos%20imobili%C3%A1rios." target="_blank" class="mobile-cta-link">Falar com Corazza →</a>
   </div>
 
   <!-- BOTÃO WHATSAPP FLUTUANTE -->
