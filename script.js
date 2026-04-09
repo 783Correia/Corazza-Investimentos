@@ -249,6 +249,48 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
   }, { passive: true });
 }
 
+// ── PROCESSO SLIDER ──
+const processoSlider = document.getElementById('processoSlider');
+const processoSlides = processoSlider ? processoSlider.querySelectorAll('.processo-slide') : [];
+const processoDots   = document.getElementById('processoDots');
+const processoDotsEl = processoDots ? processoDots.querySelectorAll('.processo-dot') : [];
+let processoAtivo = 0;
+let processoTimer = null;
+
+function ativarSlide(index) {
+  processoSlides.forEach((s, i) => s.classList.toggle('active', i === index));
+  processoDotsEl.forEach((d, i) => d.classList.toggle('active', i === index));
+  processoAtivo = index;
+}
+
+function proximoSlide() {
+  ativarSlide((processoAtivo + 1) % processoSlides.length);
+}
+
+function iniciarTimer() {
+  clearInterval(processoTimer);
+  processoTimer = setInterval(proximoSlide, 4000);
+}
+
+if (processoSlides.length) {
+  ativarSlide(0);
+  iniciarTimer();
+
+  processoSlides.forEach((slide, i) => {
+    slide.addEventListener('click', () => {
+      ativarSlide(i);
+      iniciarTimer();
+    });
+  });
+
+  processoDotsEl.forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      ativarSlide(i);
+      iniciarTimer();
+    });
+  });
+}
+
 // ── BACK TO TOP ──
 const backToTop = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {

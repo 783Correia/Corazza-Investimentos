@@ -188,14 +188,18 @@
       <p class="section-eyebrow center">Prova social</p>
       <h2 class="section-title center">Resultados de<br /><em>clientes reais</em></h2>
       <p class="section-sub center">Não são projeções ou simulações. São operações concluídas com investidores reais — empresários, médicos, produtores rurais — que confiaram no método Corazza.</p>
+      <div class="resultados-discricao">
+        <span class="discricao-icon">◆</span>
+        <p>Trabalho com <strong>total discrição</strong>. A identidade dos meus clientes é preservada em todas as circunstâncias — isso é parte do compromisso que assumo com cada um. Os dados abaixo são reais; os nomes, não.</p>
+      </div>
 
       <div class="resultados-grid">
         <div class="resultado-card">
           <div class="resultado-header">
             <div class="resultado-perfil">
-              <div class="resultado-inicial">M</div>
+              <div class="resultado-inicial">◆</div>
               <div>
-                <p class="resultado-nome">Marcelo Moser</p>
+                <p class="resultado-nome">Cliente Corazza</p>
                 <p class="resultado-setor">Setor Têxtil</p>
               </div>
             </div>
@@ -224,10 +228,10 @@
         <div class="resultado-card">
           <div class="resultado-header">
             <div class="resultado-perfil">
-              <div class="resultado-inicial">M</div>
+              <div class="resultado-inicial">◆</div>
               <div>
-                <p class="resultado-nome">Matheus Pellizzaro</p>
-                <p class="resultado-setor">Oftalmologista</p>
+                <p class="resultado-nome">Cliente Corazza</p>
+                <p class="resultado-setor">Medicina</p>
               </div>
             </div>
             <div class="resultado-badge">+118%</div>
@@ -256,9 +260,9 @@
           <div class="resultado-destaque-tag">Maior retorno absoluto</div>
           <div class="resultado-header">
             <div class="resultado-perfil">
-              <div class="resultado-inicial">L</div>
+              <div class="resultado-inicial">◆</div>
               <div>
-                <p class="resultado-nome">Leandro Pavão</p>
+                <p class="resultado-nome">Cliente Corazza</p>
                 <p class="resultado-setor">Agronegócio</p>
               </div>
             </div>
@@ -287,9 +291,9 @@
         <div class="resultado-card">
           <div class="resultado-header">
             <div class="resultado-perfil">
-              <div class="resultado-inicial">C</div>
+              <div class="resultado-inicial">◆</div>
               <div>
-                <p class="resultado-nome">Cleiton</p>
+                <p class="resultado-nome">Cliente Corazza</p>
                 <p class="resultado-setor">Energia Solar</p>
               </div>
             </div>
@@ -319,9 +323,9 @@
           <div class="resultado-destaque-tag gold">Rentabilidade recorde</div>
           <div class="resultado-header">
             <div class="resultado-perfil">
-              <div class="resultado-inicial">D</div>
+              <div class="resultado-inicial">◆</div>
               <div>
-                <p class="resultado-nome">Deison Corazza</p>
+                <p class="resultado-nome">Cliente Corazza</p>
                 <p class="resultado-setor">Mercado Imobiliário</p>
               </div>
             </div>
@@ -350,9 +354,9 @@
         <div class="resultado-card">
           <div class="resultado-header">
             <div class="resultado-perfil">
-              <div class="resultado-inicial">R</div>
+              <div class="resultado-inicial">◆</div>
               <div>
-                <p class="resultado-nome">Rochelli Horst</p>
+                <p class="resultado-nome">Cliente Corazza</p>
                 <p class="resultado-setor">Agronegócio</p>
               </div>
             </div>
@@ -393,27 +397,33 @@
     <div class="container">
       <p class="section-eyebrow center">Como funciona</p>
       <h2 class="section-title center">Da conversa ao<br /><em>retorno real</em></h2>
-      <div class="processo-grid">
-        <div class="processo-item">
+      <div class="processo-slider" id="processoSlider">
+        <div class="processo-slide" data-index="0">
           <span class="processo-num">01</span>
           <h3>Briefing & Perfil</h3>
           <p>Entendemos seus objetivos, prazo e capacidade de aporte para encontrar o ativo certo para o seu momento.</p>
         </div>
-        <div class="processo-item">
+        <div class="processo-slide" data-index="1">
           <span class="processo-num">02</span>
           <h3>Curadoria & Análise</h3>
           <p>Selecionamos apenas produtos com real potencial de valorização, testados pelo método Equity Corazza.</p>
         </div>
-        <div class="processo-item">
+        <div class="processo-slide" data-index="2">
           <span class="processo-num">03</span>
           <h3>Apresentação & Decisão</h3>
           <p>Análise completa do investimento, negociação e assinatura de contrato com total segurança jurídica.</p>
         </div>
-        <div class="processo-item">
+        <div class="processo-slide" data-index="3">
           <span class="processo-num">04</span>
           <h3>Acompanhamento & Retorno</h3>
           <p>Acompanhamos toda a jornada até a concretização do retorno. Você nunca fica no escuro.</p>
         </div>
+      </div>
+      <div class="processo-dots" id="processoDots">
+        <button class="processo-dot active" data-step="0"></button>
+        <button class="processo-dot" data-step="1"></button>
+        <button class="processo-dot" data-step="2"></button>
+        <button class="processo-dot" data-step="3"></button>
       </div>
     </div>
   </section>
