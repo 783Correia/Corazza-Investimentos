@@ -131,11 +131,13 @@ const contatoForm = document.getElementById('contatoForm');
 contatoForm.addEventListener('submit', (e) => {
   e.preventDefault();
   
-  const nome = document.getElementById('nome').value.trim();
-  const whatsapp = document.getElementById('whatsapp').value.trim();
+  const sanitize = (str) => str.replace(/[\n\r]/g, ' ').replace(/[*_~`]/g, '').trim();
+
+  const nome = sanitize(document.getElementById('nome').value);
+  const whatsapp = sanitize(document.getElementById('whatsapp').value);
   const interesse = document.getElementById('interesse').value;
-  const mensagem = document.getElementById('mensagem').value.trim();
-  
+  const mensagem = sanitize(document.getElementById('mensagem').value);
+
   // Montar mensagem para WhatsApp
   const interesses = {
     investimento: 'Investimento imobiliário',
