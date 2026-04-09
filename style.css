@@ -1925,33 +1925,6 @@ body::after {
 .mobile-cta-bar { display: none; }
 
 @media (max-width: 768px) {
-  .mobile-cta-bar {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 995;
-    background: var(--gold);
-    padding: 1rem 1.5rem;
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-    touch-action: manipulation;
-  }
-  .mobile-cta-link {
-    color: var(--black);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: center;
-    width: 100%;
-  }
-  /* Empurra botões flutuantes acima da barra */
-  .whatsapp-float { bottom: 5rem; }
-  .back-to-top { bottom: 9rem; right: 1.25rem; }
-  /* Espaço no footer para não cobrir */
-  .footer { padding-bottom: 6rem; }
   /* Depoimentos */
   .dep-grid { grid-template-columns: 1fr; }
   /* Processo linha some no mobile */
