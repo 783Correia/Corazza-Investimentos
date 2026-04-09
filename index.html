@@ -26,7 +26,9 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◆</text></svg>" />
 
   <!-- Preload hero image -->
-  <link rel="preload" as="image" href="images/hero-bg.jpg" />
+  <link rel="preload" as="image" href="images/hero-bg.jpg" media="(min-width: 1025px)" />
+  <link rel="preload" as="image" href="images/hero-tablet.jpg" media="(min-width: 601px) and (max-width: 1024px)" />
+  <link rel="preload" as="image" href="images/hero-mobile.jpg" media="(max-width: 600px)" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -77,7 +79,11 @@
   <!-- HERO -->
   <section class="hero" id="home">
     <div class="hero-bg">
-      <img src="images/hero-bg.jpg" alt="Corazza Investimentos" class="hero-img" />
+      <picture>
+        <source media="(max-width: 600px)" srcset="images/hero-mobile.jpg" />
+        <source media="(max-width: 1024px)" srcset="images/hero-tablet.jpg" />
+        <img src="images/hero-bg.jpg" alt="Corazza Investimentos" class="hero-img" />
+      </picture>
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-content">

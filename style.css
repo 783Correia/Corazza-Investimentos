@@ -2016,6 +2016,8 @@ body::after {
   .processo-grid::after { display: none; }
   /* Sobre decorativo some no mobile */
   .sobre-img-wrap::after { display: none; }
+  /* Hero image portrait no mobile */
+  .hero-img { object-position: center center; }
 }
 
 @media (max-width: 480px) {
