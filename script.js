@@ -3,9 +3,18 @@
    JavaScript: Navbar, Modal Exclusividades, Hamburger, Formulário
    ============================================================ */
 
-// ── SENHA DA ÁREA EXCLUSIVIDADES ──
-// Altere aqui para definir a senha de acesso
-const SENHA_EXCLUSIVIDADES = 'Exclusive00';
+// ── AUTENTICAÇÃO DA ÁREA EXCLUSIVIDADES ──
+// Hash SHA-256 da senha (a senha real nunca fica exposta no código)
+// Para trocar a senha: gere o novo hash com: echo -n "NovaSenha" | shasum -a 256
+const HASH_EXCLUSIVIDADES = '07973a02f25252a985e0687d9680ca8ef315dbbc13297db0ab3765798af383df';
+
+async function hashSenha(senha) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(senha);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 // ── LOADING SCREEN ──
 const loader = document.getElementById('loader');
@@ -87,12 +96,14 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') fecharModal();
 });
 
-// Verificar senha
-senhaForm.addEventListener('submit', (e) => {
+// Verificar senha (compara hash — a senha real nunca trafega ou fica exposta)
+senhaForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const digitada = senhaInput.value.trim();
-  
-  if (digitada === SENHA_EXCLUSIVIDADES) {
+
+  const hashDigitada = await hashSenha(digitada);
+
+  if (hashDigitada === HASH_EXCLUSIVIDADES) {
     exclusividadesDesbloqueadas = true;
     sessionStorage.setItem('corazza_excl', '1');
     fecharModal();
@@ -101,11 +112,8 @@ senhaForm.addEventListener('submit', (e) => {
     modalError.classList.add('visible');
     senhaInput.value = '';
     senhaInput.focus();
-    // Animação de shake
     senhaInput.style.borderColor = '#e05555';
-    setTimeout(() => {
-      senhaInput.style.borderColor = '';
-    }, 1500);
+    setTimeout(() => { senhaInput.style.borderColor = ''; }, 1500);
   }
 });
 
