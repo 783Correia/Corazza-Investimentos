@@ -36,15 +36,30 @@ window.addEventListener('scroll', () => {
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
+function toggleMenu(force) {
+  const isOpen = force !== undefined ? force : !navLinks.classList.contains('open');
+  navLinks.classList.toggle('open', isOpen);
+  hamburger.classList.toggle('open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+
+hamburger.addEventListener('click', () => toggleMenu());
+
+// Fechar ao clicar em link
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => toggleMenu(false));
 });
 
-// Fechar menu ao clicar em link
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-  });
+// Fechar ao clicar no overlay (área escura à esquerda do painel)
+document.addEventListener('click', (e) => {
+  if (navLinks.classList.contains('open') && !navLinks.contains(e.target) && e.target !== hamburger) {
+    toggleMenu(false);
+  }
+});
+
+// Fechar com Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') toggleMenu(false);
 });
 
 // ── MODAL EXCLUSIVIDADES ──
