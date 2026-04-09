@@ -2006,6 +2006,32 @@ body::after {
   .hero-title-sub { font-size: 0.85rem; }
 }
 
+/* ── RAYS DIVIDER ── */
+.rays-divider {
+  width: 100%;
+  height: 240px;
+  position: relative;
+  pointer-events: none;
+  background: var(--black);
+  overflow: hidden;
+}
+.rays-divider svg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+@keyframes raysGlow {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+.rays-divider svg { animation: raysGlow 6s ease-in-out infinite; }
+
+@media (max-width: 768px) {
+  .rays-divider { height: 160px; }
+}
+
 /* ── STICKY MOBILE CTA ── */
 .mobile-cta-bar { display: none; }
 

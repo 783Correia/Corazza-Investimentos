@@ -16,6 +16,101 @@ async function hashSenha(senha) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+// ── RAYS DIVIDERS ──
+(function () {
+  const gold = '#C9A96E';
+  const ox = 720, oy = 240; // origin: center bottom of SVG
+
+  const rays = [
+    { x: -900, op: 0.04, w: 0.4 },
+    { x: -600, op: 0.07, w: 0.4 },
+    { x: -350, op: 0.11, w: 0.5 },
+    { x: -120, op: 0.16, w: 0.5 },
+    { x:   30, op: 0.21, w: 0.6 },
+    { x:  150, op: 0.27, w: 0.7 },
+    { x:  270, op: 0.33, w: 0.8 },
+    { x:  380, op: 0.39, w: 0.8 },
+    { x:  480, op: 0.44, w: 0.9 },
+    { x:  570, op: 0.49, w: 1.0 },
+    { x:  640, op: 0.53, w: 1.0 },
+    { x:  685, op: 0.57, w: 1.1 },
+    { x:  710, op: 0.60, w: 1.2 },
+    { x:  720, op: 0.65, w: 1.5 }, // centro
+    { x:  730, op: 0.60, w: 1.2 },
+    { x:  755, op: 0.57, w: 1.1 },
+    { x:  800, op: 0.53, w: 1.0 },
+    { x:  870, op: 0.49, w: 1.0 },
+    { x:  960, op: 0.44, w: 0.9 },
+    { x: 1060, op: 0.39, w: 0.8 },
+    { x: 1170, op: 0.33, w: 0.8 },
+    { x: 1290, op: 0.27, w: 0.7 },
+    { x: 1410, op: 0.21, w: 0.6 },
+    { x: 1560, op: 0.16, w: 0.5 },
+    { x: 1760, op: 0.11, w: 0.5 },
+    { x: 2040, op: 0.07, w: 0.4 },
+    { x: 2340, op: 0.04, w: 0.4 },
+  ];
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+
+  function makeSVG() {
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', `0 0 1440 ${oy}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMax slice');
+    svg.setAttribute('xmlns', svgNS);
+
+    // Ambient glow cone (wide blurred rays behind)
+    const ambient = [
+      { w: 120, op: 0.018 },
+      { w: 60,  op: 0.03  },
+      { w: 25,  op: 0.05  },
+    ];
+    ambient.forEach(a => {
+      const l = document.createElementNS(svgNS, 'line');
+      l.setAttribute('x1', ox); l.setAttribute('y1', oy);
+      l.setAttribute('x2', 720); l.setAttribute('y2', -20);
+      l.setAttribute('stroke', gold);
+      l.setAttribute('stroke-opacity', a.op);
+      l.setAttribute('stroke-width', a.w);
+      svg.appendChild(l);
+    });
+
+    // Individual rays
+    rays.forEach(r => {
+      const l = document.createElementNS(svgNS, 'line');
+      l.setAttribute('x1', ox); l.setAttribute('y1', oy);
+      l.setAttribute('x2', r.x); l.setAttribute('y2', -10);
+      l.setAttribute('stroke', gold);
+      l.setAttribute('stroke-opacity', r.op);
+      l.setAttribute('stroke-width', r.w);
+      svg.appendChild(l);
+    });
+
+    // Glow circles at origin
+    [
+      { r: 60, op: 0.02 },
+      { r: 30, op: 0.04 },
+      { r: 14, op: 0.09 },
+      { r: 6,  op: 0.25 },
+      { r: 2.5, op: 0.9 },
+    ].forEach(c => {
+      const circle = document.createElementNS(svgNS, 'circle');
+      circle.setAttribute('cx', ox);
+      circle.setAttribute('cy', oy);
+      circle.setAttribute('r', c.r);
+      circle.setAttribute('fill', gold);
+      circle.setAttribute('fill-opacity', c.op);
+      svg.appendChild(circle);
+    });
+
+    return svg;
+  }
+
+  document.querySelectorAll('.rays-divider').forEach(el => {
+    el.appendChild(makeSVG());
+  });
+})();
+
 // ── LOADING SCREEN ──
 const loader = document.getElementById('loader');
 window.addEventListener('load', () => {
