@@ -182,7 +182,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Aplicar animação de entrada nos elementos
-document.querySelectorAll('.inv-card, .processo-item, .mentoria-card, .excl-card, .parceiro-item, .dep-card').forEach(el => {
+document.querySelectorAll('.inv-card, .processo-item, .mentoria-card, .excl-card, .parceiro-item, .dep-card, .resultado-card, .problema-item, .metodo-pilar, .parceiro-bar-item').forEach(el => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(20px)';
   el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, background 0.3s ease';
