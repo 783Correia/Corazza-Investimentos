@@ -18,9 +18,9 @@
   --ink3:      #888888;
 
   /* Acento */
-  --gold:      #A8864A;
-  --gold-light:#C9A96E;
-  --gold-bg:   rgba(168,134,74,0.08);
+  --gold:      #3A3A3A;
+  --gold-light:#888888;
+  --gold-bg:   rgba(0,0,0,0.04);
 
   /* Bordas */
   --border:        rgba(0,0,0,0.08);
@@ -322,7 +322,7 @@ ul { list-style: none; }
   color: #fff;
   margin-bottom: 2rem;
 }
-.hero-title em { font-style: italic; color: var(--gold-light); }
+.hero-title em { font-style: italic; color: rgba(255,255,255,0.72); }
 .hero-sub {
   font-size: 17px;
   color: rgba(255,255,255,0.8);
@@ -1024,7 +1024,7 @@ ul { list-style: none; }
   color: #fff;
   margin-bottom: 1.5rem;
 }
-.cta-title em { font-style: italic; color: var(--gold-light); }
+.cta-title em { font-style: italic; color: rgba(255,255,255,0.72); }
 .cta-sub {
   font-size: 17px;
   color: rgba(255,255,255,0.75);
@@ -1519,19 +1519,6 @@ ul { list-style: none; }
 }
 
 /* ── SECTION ANIMATIONS ── */
-.sobre-img-wrap::after {
-  content: '';
-  position: absolute;
-  bottom: -14px;
-  left: -14px;
-  width: 55%;
-  height: 55%;
-  border: 1px solid var(--gold);
-  opacity: 0.25;
-  pointer-events: none;
-  z-index: 0;
-  border-radius: 0 0 var(--radius) 0;
-}
 .sobre-img { position: relative; z-index: 1; }
 
 /* ── RESPONSIVE ── */
