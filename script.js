@@ -1,6 +1,7 @@
 /* ============================================================
    CORAZZA — INVESTIMENTO IMOBILIÁRIO
-   JavaScript: Navbar, Modal Exclusividades, Hamburger, Formulário
+   JavaScript: Navbar, Modal Exclusividades, Hamburger,
+               Accordion Processo, Selected Projects, Formulário
    ============================================================ */
 
 // ── AUTENTICAÇÃO DA ÁREA EXCLUSIVIDADES ──
@@ -16,101 +17,6 @@ async function hashSenha(senha) {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-// ── RAYS DIVIDERS ──
-(function () {
-  const gold = '#C9A96E';
-  const ox = 720, oy = 240; // origin: center bottom of SVG
-
-  const rays = [
-    { x: -900, op: 0.04, w: 0.4 },
-    { x: -600, op: 0.07, w: 0.4 },
-    { x: -350, op: 0.11, w: 0.5 },
-    { x: -120, op: 0.16, w: 0.5 },
-    { x:   30, op: 0.21, w: 0.6 },
-    { x:  150, op: 0.27, w: 0.7 },
-    { x:  270, op: 0.33, w: 0.8 },
-    { x:  380, op: 0.39, w: 0.8 },
-    { x:  480, op: 0.44, w: 0.9 },
-    { x:  570, op: 0.49, w: 1.0 },
-    { x:  640, op: 0.53, w: 1.0 },
-    { x:  685, op: 0.57, w: 1.1 },
-    { x:  710, op: 0.60, w: 1.2 },
-    { x:  720, op: 0.65, w: 1.5 }, // centro
-    { x:  730, op: 0.60, w: 1.2 },
-    { x:  755, op: 0.57, w: 1.1 },
-    { x:  800, op: 0.53, w: 1.0 },
-    { x:  870, op: 0.49, w: 1.0 },
-    { x:  960, op: 0.44, w: 0.9 },
-    { x: 1060, op: 0.39, w: 0.8 },
-    { x: 1170, op: 0.33, w: 0.8 },
-    { x: 1290, op: 0.27, w: 0.7 },
-    { x: 1410, op: 0.21, w: 0.6 },
-    { x: 1560, op: 0.16, w: 0.5 },
-    { x: 1760, op: 0.11, w: 0.5 },
-    { x: 2040, op: 0.07, w: 0.4 },
-    { x: 2340, op: 0.04, w: 0.4 },
-  ];
-
-  const svgNS = 'http://www.w3.org/2000/svg';
-
-  function makeSVG() {
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('viewBox', `0 0 1440 ${oy}`);
-    svg.setAttribute('preserveAspectRatio', 'xMidYMax slice');
-    svg.setAttribute('xmlns', svgNS);
-
-    // Ambient glow cone (wide blurred rays behind)
-    const ambient = [
-      { w: 120, op: 0.018 },
-      { w: 60,  op: 0.03  },
-      { w: 25,  op: 0.05  },
-    ];
-    ambient.forEach(a => {
-      const l = document.createElementNS(svgNS, 'line');
-      l.setAttribute('x1', ox); l.setAttribute('y1', oy);
-      l.setAttribute('x2', 720); l.setAttribute('y2', -20);
-      l.setAttribute('stroke', gold);
-      l.setAttribute('stroke-opacity', a.op);
-      l.setAttribute('stroke-width', a.w);
-      svg.appendChild(l);
-    });
-
-    // Individual rays
-    rays.forEach(r => {
-      const l = document.createElementNS(svgNS, 'line');
-      l.setAttribute('x1', ox); l.setAttribute('y1', oy);
-      l.setAttribute('x2', r.x); l.setAttribute('y2', -10);
-      l.setAttribute('stroke', gold);
-      l.setAttribute('stroke-opacity', r.op);
-      l.setAttribute('stroke-width', r.w);
-      svg.appendChild(l);
-    });
-
-    // Glow circles at origin
-    [
-      { r: 60, op: 0.02 },
-      { r: 30, op: 0.04 },
-      { r: 14, op: 0.09 },
-      { r: 6,  op: 0.25 },
-      { r: 2.5, op: 0.9 },
-    ].forEach(c => {
-      const circle = document.createElementNS(svgNS, 'circle');
-      circle.setAttribute('cx', ox);
-      circle.setAttribute('cy', oy);
-      circle.setAttribute('r', c.r);
-      circle.setAttribute('fill', gold);
-      circle.setAttribute('fill-opacity', c.op);
-      svg.appendChild(circle);
-    });
-
-    return svg;
-  }
-
-  document.querySelectorAll('.rays-divider').forEach(el => {
-    el.appendChild(makeSVG());
-  });
-})();
-
 // ── LOADING SCREEN ──
 const loader = document.getElementById('loader');
 window.addEventListener('load', () => {
@@ -120,16 +26,12 @@ window.addEventListener('load', () => {
 // ── NAVBAR SCROLL ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 60) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-});
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
 
 // ── HAMBURGER MENU ──
 const hamburger = document.getElementById('hamburger');
-const navLinks = document.getElementById('navLinks');
+const navLinks  = document.getElementById('navLinks');
 
 function toggleMenu(force) {
   const isOpen = force !== undefined ? force : !navLinks.classList.contains('open');
@@ -140,40 +42,33 @@ function toggleMenu(force) {
 
 hamburger.addEventListener('click', () => toggleMenu());
 
-// Fechar ao clicar em link
 navLinks.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => toggleMenu(false));
 });
 
-// Fechar ao clicar no overlay (área escura à esquerda do painel)
 document.addEventListener('click', (e) => {
   if (navLinks.classList.contains('open') && !navLinks.contains(e.target) && e.target !== hamburger) {
     toggleMenu(false);
   }
 });
 
-// Fechar com Escape
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') toggleMenu(false);
+  if (e.key === 'Escape') { toggleMenu(false); fecharModal(); }
 });
 
 // ── MODAL EXCLUSIVIDADES ──
-const modalOverlay = document.getElementById('modalOverlay');
-const modalClose = document.getElementById('modalClose');
-const senhaForm = document.getElementById('senhaForm');
-const senhaInput = document.getElementById('senha');
-const modalError = document.getElementById('modalError');
-const modalContato = document.getElementById('modalContato');
+const modalOverlay       = document.getElementById('modalOverlay');
+const modalClose         = document.getElementById('modalClose');
+const senhaForm          = document.getElementById('senhaForm');
+const senhaInput         = document.getElementById('senha');
+const modalError         = document.getElementById('modalError');
+const modalContato       = document.getElementById('modalContato');
 const exclusividadesArea = document.getElementById('exclusividadesArea');
 
-// Verificar se já está autenticado na sessão
 let exclusividadesDesbloqueadas = sessionStorage.getItem('corazza_excl') === '1';
 
 function abrirModal() {
-  if (exclusividadesDesbloqueadas) {
-    mostrarExclusividades();
-    return;
-  }
+  if (exclusividadesDesbloqueadas) { mostrarExclusividades(); return; }
   modalOverlay.classList.add('active');
   setTimeout(() => senhaInput.focus(), 300);
 }
@@ -189,28 +84,16 @@ function mostrarExclusividades() {
   exclusividadesArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// Todos os links que abrem exclusividades
 document.querySelectorAll('.nav-exclusividades, .nav-exclusividades-link').forEach(el => {
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
-    abrirModal();
-  });
+  el.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
 });
 
-// Fechar modal
 modalClose.addEventListener('click', fecharModal);
-modalOverlay.addEventListener('click', (e) => {
-  if (e.target === modalOverlay) fecharModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') fecharModal();
-});
+modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) fecharModal(); });
 
-// Verificar senha (compara hash — a senha real nunca trafega ou fica exposta)
 senhaForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const digitada = senhaInput.value.trim();
-
+  const digitada   = senhaInput.value.trim();
   const hashDigitada = await hashSenha(digitada);
 
   if (hashDigitada === HASH_EXCLUSIVIDADES) {
@@ -222,21 +105,17 @@ senhaForm.addEventListener('submit', async (e) => {
     modalError.classList.add('visible');
     senhaInput.value = '';
     senhaInput.focus();
-    senhaInput.style.borderColor = '#e05555';
+    senhaInput.style.borderColor = '#c0392b';
     setTimeout(() => { senhaInput.style.borderColor = ''; }, 1500);
   }
 });
 
-// Link "Fale com Corazza" dentro do modal
 modalContato.addEventListener('click', (e) => {
   e.preventDefault();
   fecharModal();
-  setTimeout(() => {
-    document.getElementById('contato').scrollIntoView({ behavior: 'smooth' });
-  }, 300);
+  setTimeout(() => document.getElementById('contato').scrollIntoView({ behavior: 'smooth' }), 300);
 });
 
-// Botão sair da área exclusiva
 document.getElementById('sairExclusividades').addEventListener('click', () => {
   exclusividadesDesbloqueadas = false;
   sessionStorage.removeItem('corazza_excl');
@@ -244,68 +123,144 @@ document.getElementById('sairExclusividades').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+if (exclusividadesDesbloqueadas) exclusividadesArea.style.display = 'block';
+
+// ── ACCORDION PROCESSO ──
+const accordionItems = document.querySelectorAll('.processo-item-acc');
+
+accordionItems.forEach(item => {
+  item.querySelector('.processo-item-header').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    // Fechar todos
+    accordionItems.forEach(i => i.classList.remove('open'));
+    // Abrir este (toggle)
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+// ── INVESTIMENTOS — SELECTED PROJECTS ──
+const invProjects = [
+  {
+    img:    'images/palazzo-hero.png',
+    alt:    'Palazzo Giardino',
+    tag:    'Pré-lançamento',
+    title:  'Palazzo Giardino',
+    stat1:  { val: '132m²',        label: 'Área privativa' },
+    stat2:  { val: 'R$15.628/m²',  label: 'Valor/m²' },
+    stat3:  { val: '–40%',         label: 'vs. mercado' },
+  },
+  {
+    img:    'images/vivapark-hero.jpg',
+    alt:    'Viva Park Corporate',
+    tag:    'Última unidade',
+    title:  'Viva Park Corporate',
+    stat1:  { val: '41,56m²',      label: 'Área' },
+    stat2:  { val: '23º andar',    label: 'Vista Parque' },
+    stat3:  { val: '80k/mês',      label: 'Visitantes' },
+  },
+  {
+    img:    'images/paesaggio-hero.jpg',
+    alt:    'Paesaggio Residencial',
+    tag:    'Pronto para morar',
+    title:  'Paesaggio Residencial',
+    stat1:  { val: '131m²',        label: 'Área privativa' },
+    stat2:  { val: 'R$21.374/m²',  label: 'Valor/m²' },
+    stat3:  { val: '–27%',         label: 'vs. teto de mercado' },
+  },
+];
+
+const invListItems  = document.querySelectorAll('.inv-list-item');
+const invPreviewImg = document.getElementById('invPreviewImg');
+const invPreviewTag = document.getElementById('invPreviewTag');
+const invPreviewTitle = document.getElementById('invPreviewTitle');
+const invStat1Val   = document.getElementById('invStat1Val');
+const invStat1Label = document.getElementById('invStat1Label');
+const invStat2Val   = document.getElementById('invStat2Val');
+const invStat2Label = document.getElementById('invStat2Label');
+const invStat3Val   = document.getElementById('invStat3Val');
+const invStat3Label = document.getElementById('invStat3Label');
+
+function updatePreview(index) {
+  const p = invProjects[index];
+  if (!p || !invPreviewImg) return;
+
+  invPreviewImg.style.opacity = '0';
+  setTimeout(() => {
+    invPreviewImg.src       = p.img;
+    invPreviewImg.alt       = p.alt;
+    invPreviewTag.textContent   = p.tag;
+    invPreviewTitle.textContent = p.title;
+    invStat1Val.textContent     = p.stat1.val;
+    invStat1Label.textContent   = p.stat1.label;
+    invStat2Val.textContent     = p.stat2.val;
+    invStat2Label.textContent   = p.stat2.label;
+    invStat3Val.textContent     = p.stat3.val;
+    invStat3Label.textContent   = p.stat3.label;
+    invPreviewImg.style.opacity = '1';
+  }, 250);
+
+  invListItems.forEach((item, i) => item.classList.toggle('active', i === index));
+}
+
+invListItems.forEach((item, i) => {
+  item.addEventListener('click', () => updatePreview(i));
+});
+
 // ── FORMULÁRIO DE CONTATO ──
 const contatoForm = document.getElementById('contatoForm');
 contatoForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  
+
   const sanitize = (str) => str.replace(/[\n\r]/g, ' ').replace(/[*_~`]/g, '').trim();
 
-  const nome = sanitize(document.getElementById('nome').value);
-  const whatsapp = sanitize(document.getElementById('whatsapp').value);
+  const nome      = sanitize(document.getElementById('nome').value);
+  const whatsapp  = sanitize(document.getElementById('whatsapp').value);
   const interesse = document.getElementById('interesse').value;
-  const mensagem = sanitize(document.getElementById('mensagem').value);
+  const mensagem  = sanitize(document.getElementById('mensagem').value);
 
-  // Montar mensagem para WhatsApp
   const interesses = {
     investimento: 'Investimento imobiliário',
-    clube: 'Clube Corazza',
-    mentoria: 'Mentoria',
-    parceria: 'Parceria',
-    '': 'Geral'
+    clube:        'Clube Corazza',
+    mentoria:     'Mentoria',
+    parceria:     'Parceria',
+    '':           'Geral'
   };
-  
+
   const texto = `Olá Dieison! Vim pelo site Corazza.\n\n*Nome:* ${nome}\n*WhatsApp:* ${whatsapp}\n*Interesse:* ${interesses[interesse] || 'Geral'}${mensagem ? `\n*Mensagem:* ${mensagem}` : ''}`;
-  
-  const url = `https://wa.me/5547992762266?text=${encodeURIComponent(texto)}`;
+  const url   = `https://wa.me/5547992762266?text=${encodeURIComponent(texto)}`;
   window.open(url, '_blank');
-  
-  // Feedback visual
+
   const btn = contatoForm.querySelector('button[type="submit"]');
   const originalText = btn.textContent;
   btn.textContent = 'Mensagem enviada ✓';
-  btn.style.background = '#5cb85c';
-  btn.style.color = '#fff';
-  
+  btn.style.background = '#27ae60';
+
   setTimeout(() => {
-    btn.textContent = originalText;
+    btn.textContent   = originalText;
     btn.style.background = '';
-    btn.style.color = '';
     contatoForm.reset();
   }, 3000);
 });
 
 // ── ANIMAÇÕES DE ENTRADA ──
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
-};
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
+      entry.target.style.opacity   = '1';
       entry.target.style.transform = 'translateY(0)';
       observer.unobserve(entry.target);
     }
   });
 }, observerOptions);
 
-// Aplicar animação de entrada nos elementos
-document.querySelectorAll('.inv-card, .processo-item, .mentoria-card, .excl-card, .parceiro-item, .dep-card, .resultado-card, .problema-item, .metodo-pilar, .parceiro-bar-item').forEach(el => {
-  el.style.opacity = '0';
+document.querySelectorAll(
+  '.resultado-card, .bento-pilar, .bento-intro, .bento-stats, .dep-card, .excl-card, .clube-beneficio, .processo-item-acc'
+).forEach(el => {
+  el.style.opacity   = '0';
   el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, background 0.3s ease';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
   observer.observe(el);
 });
 
@@ -314,7 +269,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
     if (href === '#') return;
-    
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
@@ -324,36 +278,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
-
-// ── VERIFICAR SESSÃO AO CARREGAR ──
-if (exclusividadesDesbloqueadas) {
-  exclusividadesArea.style.display = 'block';
-}
-
-// ── COUNTER ANIMATION ──
-function animateCounter(el, target, duration) {
-  const start = performance.now();
-  const update = (now) => {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(eased * target);
-    if (progress < 1) requestAnimationFrame(update);
-  };
-  requestAnimationFrame(update);
-}
-
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
-    const target = parseInt(el.dataset.count, 10);
-    const numEl = el.querySelector('.count-num');
-    if (numEl) animateCounter(numEl, target, 1800);
-    counterObserver.unobserve(el);
-  });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
 
 // ── HERO PARALLAX (desktop only) ──
 const heroImg = document.querySelector('.hero-img');
@@ -369,58 +293,9 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
   }, { passive: true });
 }
 
-// ── PROCESSO SLIDER ──
-const processoSlider = document.getElementById('processoSlider');
-const processoSlides = processoSlider ? processoSlider.querySelectorAll('.processo-slide') : [];
-const processoDots   = document.getElementById('processoDots');
-const processoDotsEl = processoDots ? processoDots.querySelectorAll('.processo-dot') : [];
-let processoAtivo = 0;
-let processoTimer = null;
-
-function ativarSlide(index) {
-  processoSlides.forEach((s, i) => s.classList.toggle('active', i === index));
-  processoDotsEl.forEach((d, i) => d.classList.toggle('active', i === index));
-  processoAtivo = index;
-}
-
-function proximoSlide() {
-  ativarSlide((processoAtivo + 1) % processoSlides.length);
-}
-
-function iniciarTimer() {
-  clearInterval(processoTimer);
-  processoTimer = setInterval(proximoSlide, 4000);
-}
-
-if (processoSlides.length) {
-  ativarSlide(0);
-  iniciarTimer();
-
-  processoSlides.forEach((slide, i) => {
-    slide.addEventListener('click', () => {
-      ativarSlide(i);
-      iniciarTimer();
-    });
-  });
-
-  processoDotsEl.forEach((dot, i) => {
-    dot.addEventListener('click', () => {
-      ativarSlide(i);
-      iniciarTimer();
-    });
-  });
-}
-
 // ── BACK TO TOP ──
 const backToTop = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 500) {
-    backToTop.classList.add('visible');
-  } else {
-    backToTop.classList.remove('visible');
-  }
+  backToTop.classList.toggle('visible', window.scrollY > 500);
 }, { passive: true });
-
-backToTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
