@@ -422,9 +422,10 @@ ul { list-style: none; }
 .bento-stats {
   grid-column: 3;
   grid-row: 1 / 3;
-  background: var(--ink);
-  color: #fff;
+  background: var(--bg3);
+  color: var(--ink);
   border-radius: var(--radius);
+  border: 1px solid var(--border);
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
@@ -435,25 +436,25 @@ ul { list-style: none; }
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--gold-light);
+  color: var(--ink3);
   margin-bottom: 2rem;
 }
 .bento-stat {
   padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid var(--border);
 }
 .bento-stat:last-child { border-bottom: none; }
 .bento-stat-num {
   font-family: var(--font-serif);
   font-size: 2.25rem;
   font-weight: 300;
-  color: #fff;
+  color: var(--ink);
   line-height: 1;
   margin-bottom: 0.3rem;
 }
 .bento-stat-desc {
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: var(--ink2);
   line-height: 1.4;
 }
 .bento-pilar {
