@@ -900,37 +900,23 @@ ul { list-style: none; }
   background: var(--bg2);
 }
 .dep-showcase {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
   margin: 3.5rem 0 2rem;
+  align-items: start;
 }
 .dep-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 2.5rem;
-  width: min(360px, 85vw);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-  position: absolute;
   transition: var(--transition);
 }
-.dep-card:nth-child(1) {
-  transform: rotate(-5deg) translate(-140px, 16px);
-  z-index: 1;
-}
 .dep-card:nth-child(2) {
-  transform: rotate(0deg) translateY(-16px);
-  z-index: 3;
-  position: relative;
+  margin-top: 2rem;
 }
-.dep-card:nth-child(3) {
-  transform: rotate(5deg) translate(140px, 16px);
-  z-index: 1;
-}
-.dep-card:hover { z-index: 4; box-shadow: 0 16px 60px rgba(0,0,0,0.14); }
+.dep-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); border-color: var(--border-strong); }
 .dep-quote {
   font-family: var(--font-serif);
   font-size: 1.1rem;
@@ -1691,9 +1677,8 @@ ul { list-style: none; }
   .inv-list-item.active { border-left: none; border-top-color: var(--gold); padding-left: 2rem; }
 
   /* Depoimentos */
-  .dep-showcase { min-height: auto; flex-direction: column; gap: 1.5rem; }
-  .dep-card { position: relative; transform: none !important; width: 100%; }
-  .dep-card:nth-child(1), .dep-card:nth-child(2), .dep-card:nth-child(3) { transform: none; }
+  .dep-showcase { grid-template-columns: 1fr; }
+  .dep-card:nth-child(2) { margin-top: 0; }
 
   /* Clube */
   .clube-beneficios-row { grid-template-columns: 1fr; }
