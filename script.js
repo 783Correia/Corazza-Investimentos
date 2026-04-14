@@ -307,6 +307,8 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
 
   const items = Array.from(track.querySelectorAll('.vantagem-item'));
   let current = 0;
+  let isAnimating = false;
+  let animationTimer = null;
 
   // Dots
   dotsEl.innerHTML = '';
@@ -326,19 +328,23 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
     dotsEl.querySelectorAll('.vant-dot').forEach((d, j) => d.classList.toggle('active', j === current));
   }
 
-  // Atualiza estado imediatamente ao clicar — sem depender do scroll terminar
   function goToSlide(i) {
     i = Math.max(0, Math.min(i, items.length - 1));
     if (i === current) return;
     const outerRect = outer.getBoundingClientRect();
     const itemRect  = items[i].getBoundingClientRect();
     const delta = (itemRect.left + itemRect.width / 2) - (outerRect.left + outerRect.width / 2);
+    isAnimating = true;
+    clearTimeout(animationTimer);
     outer.scrollTo({ left: outer.scrollLeft + delta, behavior: 'smooth' });
     setActive(i);
+    // Libera updateActive após a animação terminar (~500ms)
+    animationTimer = setTimeout(() => { isAnimating = false; }, 600);
   }
 
-  // Só entra quando o usuário arrasta/rola manualmente
+  // Só atualiza estado quando o usuário arrasta/rola manualmente
   function updateActive() {
+    if (isAnimating) return;
     const outerRect = outer.getBoundingClientRect();
     const centerX   = outerRect.left + outerRect.width / 2;
     let closest = 0, minDist = Infinity;
