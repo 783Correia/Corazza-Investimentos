@@ -318,16 +318,26 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
     dotsEl.appendChild(d);
   });
 
-  // Usa getBoundingClientRect para posição real e scrollBy no container,
-  // evitando que scrollIntoView role a página inteira
+  function setActive(i) {
+    current = i;
+    items.forEach((item, j) => item.classList.toggle('is-active', j === current));
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === items.length - 1;
+    dotsEl.querySelectorAll('.vant-dot').forEach((d, j) => d.classList.toggle('active', j === current));
+  }
+
+  // Atualiza estado imediatamente ao clicar — sem depender do scroll terminar
   function goToSlide(i) {
     i = Math.max(0, Math.min(i, items.length - 1));
+    if (i === current) return;
     const outerRect = outer.getBoundingClientRect();
     const itemRect  = items[i].getBoundingClientRect();
     const delta = (itemRect.left + itemRect.width / 2) - (outerRect.left + outerRect.width / 2);
-    outer.scrollBy({ left: delta, behavior: 'smooth' });
+    outer.scrollTo({ left: outer.scrollLeft + delta, behavior: 'smooth' });
+    setActive(i);
   }
 
+  // Só entra quando o usuário arrasta/rola manualmente
   function updateActive() {
     const outerRect = outer.getBoundingClientRect();
     const centerX   = outerRect.left + outerRect.width / 2;
@@ -338,11 +348,7 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
       if (dist < minDist) { minDist = dist; closest = i; }
     });
     if (closest === current) return;
-    current = closest;
-    items.forEach((item, i) => item.classList.toggle('is-active', i === current));
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === items.length - 1;
-    dotsEl.querySelectorAll('.vant-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    setActive(closest);
   }
 
   outer.addEventListener('scroll', updateActive, { passive: true });
