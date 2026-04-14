@@ -314,20 +314,27 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
     const d = document.createElement('button');
     d.className = 'vant-dot' + (i === 0 ? ' active' : '');
     d.setAttribute('aria-label', `Item ${i + 1}`);
-    d.addEventListener('click', () => scrollTo(i));
+    d.addEventListener('click', () => goToSlide(i));
     dotsEl.appendChild(d);
   });
 
-  function scrollTo(i) {
-    current = Math.max(0, Math.min(i, items.length - 1));
-    items[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // Usa getBoundingClientRect para posição real e scrollBy no container,
+  // evitando que scrollIntoView role a página inteira
+  function goToSlide(i) {
+    i = Math.max(0, Math.min(i, items.length - 1));
+    const outerRect = outer.getBoundingClientRect();
+    const itemRect  = items[i].getBoundingClientRect();
+    const delta = (itemRect.left + itemRect.width / 2) - (outerRect.left + outerRect.width / 2);
+    outer.scrollBy({ left: delta, behavior: 'smooth' });
   }
 
   function updateActive() {
-    const center = outer.scrollLeft + outer.offsetWidth / 2;
+    const outerRect = outer.getBoundingClientRect();
+    const centerX   = outerRect.left + outerRect.width / 2;
     let closest = 0, minDist = Infinity;
     items.forEach((item, i) => {
-      const dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+      const r = item.getBoundingClientRect();
+      const dist = Math.abs((r.left + r.width / 2) - centerX);
       if (dist < minDist) { minDist = dist; closest = i; }
     });
     if (closest === current) return;
@@ -339,8 +346,8 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
   }
 
   outer.addEventListener('scroll', updateActive, { passive: true });
-  prevBtn.addEventListener('click', () => scrollTo(current - 1));
-  nextBtn.addEventListener('click', () => scrollTo(current + 1));
+  prevBtn.addEventListener('click', () => goToSlide(current - 1));
+  nextBtn.addEventListener('click', () => goToSlide(current + 1));
 
   // init
   items[0].classList.add('is-active');
