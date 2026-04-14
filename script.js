@@ -4,6 +4,9 @@
                Accordion Processo, Selected Projects, Formulário
    ============================================================ */
 
+// ── CONSTANTES ──
+const WA_NUMBER = '5547992762266';
+
 // ── AUTENTICAÇÃO DA ÁREA EXCLUSIVIDADES ──
 // Hash SHA-256 da senha (a senha real nunca fica exposta no código)
 // Para trocar a senha: gere o novo hash com: echo -n "NovaSenha" | shasum -a 256
@@ -20,7 +23,7 @@ async function hashSenha(senha) {
 // ── LOADING SCREEN ──
 const loader = document.getElementById('loader');
 window.addEventListener('load', () => {
-  setTimeout(() => loader.classList.add('hide'), 850);
+  setTimeout(() => loader.classList.add('hide'), 500);
 });
 
 // ── NAVBAR SCROLL ──
@@ -227,7 +230,7 @@ contatoForm.addEventListener('submit', (e) => {
   };
 
   const texto = `Olá Dieison! Vim pelo site Corazza.\n\n*Nome:* ${nome}\n*WhatsApp:* ${whatsapp}\n*Interesse:* ${interesses[interesse] || 'Geral'}${mensagem ? `\n*Mensagem:* ${mensagem}` : ''}`;
-  const url   = `https://wa.me/5547992762266?text=${encodeURIComponent(texto)}`;
+  const url   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
   window.open(url, '_blank');
 
   const btn = contatoForm.querySelector('button[type="submit"]');
@@ -292,6 +295,57 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
     }
   }, { passive: true });
 }
+
+// ── VANTAGENS CARROSSEL ──
+(function () {
+  const outer   = document.querySelector('.vant-carousel-outer');
+  const track   = document.getElementById('vantTrack');
+  const prevBtn = document.getElementById('vantPrev');
+  const nextBtn = document.getElementById('vantNext');
+  const dotsEl  = document.getElementById('vantDots');
+  if (!outer || !track) return;
+
+  const items = Array.from(track.querySelectorAll('.vantagem-item'));
+  let current = 0;
+
+  // Dots
+  dotsEl.innerHTML = '';
+  items.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'vant-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Item ${i + 1}`);
+    d.addEventListener('click', () => scrollTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  function scrollTo(i) {
+    current = Math.max(0, Math.min(i, items.length - 1));
+    items[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+
+  function updateActive() {
+    const center = outer.scrollLeft + outer.offsetWidth / 2;
+    let closest = 0, minDist = Infinity;
+    items.forEach((item, i) => {
+      const dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    if (closest === current) return;
+    current = closest;
+    items.forEach((item, i) => item.classList.toggle('is-active', i === current));
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === items.length - 1;
+    dotsEl.querySelectorAll('.vant-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  outer.addEventListener('scroll', updateActive, { passive: true });
+  prevBtn.addEventListener('click', () => scrollTo(current - 1));
+  nextBtn.addEventListener('click', () => scrollTo(current + 1));
+
+  // init
+  items[0].classList.add('is-active');
+  prevBtn.disabled = true;
+})();
 
 // ── BACK TO TOP ──
 const backToTop = document.getElementById('backToTop');
