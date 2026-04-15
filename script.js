@@ -132,12 +132,18 @@ if (exclusividadesDesbloqueadas) exclusividadesArea.style.display = 'block';
 const accordionItems = document.querySelectorAll('.processo-item-acc');
 
 accordionItems.forEach(item => {
-  item.querySelector('.processo-item-header').addEventListener('click', () => {
+  const header = item.querySelector('.processo-item-header');
+  header.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+  header.addEventListener('click', () => {
     const isOpen = item.classList.contains('open');
-    // Fechar todos
-    accordionItems.forEach(i => i.classList.remove('open'));
-    // Abrir este (toggle)
-    if (!isOpen) item.classList.add('open');
+    accordionItems.forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.processo-item-header').setAttribute('aria-expanded', 'false');
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      header.setAttribute('aria-expanded', 'true');
+    }
   });
 });
 
@@ -259,7 +265,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 document.querySelectorAll(
-  '.resultado-card, .bento-pilar, .bento-intro, .bento-stats, .dep-card, .excl-card, .clube-beneficio, .processo-item-acc'
+  '.resultado-card, .bento-pilar, .bento-intro, .dep-card, .excl-card, .clube-beneficio, .processo-item-acc'
 ).forEach(el => {
   el.style.opacity   = '0';
   el.style.transform = 'translateY(20px)';
@@ -295,76 +301,6 @@ if (heroImg && !isTouch && !prefersReducedMotion) {
     }
   }, { passive: true });
 }
-
-// ── VANTAGENS CARROSSEL ──
-(function () {
-  const outer   = document.querySelector('.vant-carousel-outer');
-  const track   = document.getElementById('vantTrack');
-  const prevBtn = document.getElementById('vantPrev');
-  const nextBtn = document.getElementById('vantNext');
-  const dotsEl  = document.getElementById('vantDots');
-  if (!outer || !track) return;
-
-  const items = Array.from(track.querySelectorAll('.vantagem-item'));
-  let current = 0;
-  let isAnimating = false;
-  let animationTimer = null;
-
-  // Dots
-  dotsEl.innerHTML = '';
-  items.forEach((_, i) => {
-    const d = document.createElement('button');
-    d.className = 'vant-dot' + (i === 0 ? ' active' : '');
-    d.setAttribute('aria-label', `Item ${i + 1}`);
-    d.addEventListener('click', () => goToSlide(i));
-    dotsEl.appendChild(d);
-  });
-
-  function setActive(i) {
-    current = i;
-    items.forEach((item, j) => item.classList.toggle('is-active', j === current));
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === items.length - 1;
-    dotsEl.querySelectorAll('.vant-dot').forEach((d, j) => d.classList.toggle('active', j === current));
-  }
-
-  function goToSlide(i) {
-    i = Math.max(0, Math.min(i, items.length - 1));
-    if (i === current) return;
-    const outerRect = outer.getBoundingClientRect();
-    const itemRect  = items[i].getBoundingClientRect();
-    const delta = (itemRect.left + itemRect.width / 2) - (outerRect.left + outerRect.width / 2);
-    isAnimating = true;
-    clearTimeout(animationTimer);
-    outer.scrollTo({ left: outer.scrollLeft + delta, behavior: 'smooth' });
-    setActive(i);
-    // Libera updateActive após a animação terminar (~500ms)
-    animationTimer = setTimeout(() => { isAnimating = false; }, 600);
-  }
-
-  // Só atualiza estado quando o usuário arrasta/rola manualmente
-  function updateActive() {
-    if (isAnimating) return;
-    const outerRect = outer.getBoundingClientRect();
-    const centerX   = outerRect.left + outerRect.width / 2;
-    let closest = 0, minDist = Infinity;
-    items.forEach((item, i) => {
-      const r = item.getBoundingClientRect();
-      const dist = Math.abs((r.left + r.width / 2) - centerX);
-      if (dist < minDist) { minDist = dist; closest = i; }
-    });
-    if (closest === current) return;
-    setActive(closest);
-  }
-
-  outer.addEventListener('scroll', updateActive, { passive: true });
-  prevBtn.addEventListener('click', () => goToSlide(current - 1));
-  nextBtn.addEventListener('click', () => goToSlide(current + 1));
-
-  // init
-  items[0].classList.add('is-active');
-  prevBtn.disabled = true;
-})();
 
 // ── BACK TO TOP ──
 const backToTop = document.getElementById('backToTop');
