@@ -925,6 +925,11 @@ ul { list-style: none; }
 .dep-card:nth-child(2) {
   margin-top: 2rem;
 }
+/* Terceiro card — quote curta: fonte maior para que a brevidade pareça intencional */
+.dep-card:nth-child(3) .dep-quote {
+  font-size: 1.45rem;
+  line-height: 1.6;
+}
 .dep-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); border-color: var(--border-strong); }
 .dep-quote {
   font-family: var(--font-serif);

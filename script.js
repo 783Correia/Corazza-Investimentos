@@ -8,16 +8,20 @@
 const WA_NUMBER = '5547992762266';
 
 // ── AUTENTICAÇÃO DA ÁREA EXCLUSIVIDADES ──
-// Hash SHA-256 da senha (a senha real nunca fica exposta no código)
-// Para trocar a senha: gere o novo hash com: echo -n "NovaSenha" | shasum -a 256
-const HASH_EXCLUSIVIDADES = '07973a02f25252a985e0687d9680ca8ef315dbbc13297db0ab3765798af383df';
-
-async function hashSenha(senha) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(senha);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+// Validação feita server-side via /api/verify — nenhum segredo fica exposto no cliente.
+async function verificarSenha(senha) {
+  try {
+    const res = await fetch('/api/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: senha }),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.ok ? data.token : null;
+  } catch {
+    return null;
+  }
 }
 
 // ── LOADING SCREEN ──
@@ -68,7 +72,8 @@ const modalError         = document.getElementById('modalError');
 const modalContato       = document.getElementById('modalContato');
 const exclusividadesArea = document.getElementById('exclusividadesArea');
 
-let exclusividadesDesbloqueadas = sessionStorage.getItem('corazza_excl') === '1';
+// Token de sessão (string assinada pelo servidor, ou null)
+let exclusividadesDesbloqueadas = !!sessionStorage.getItem('corazza_token');
 
 function abrirModal() {
   if (exclusividadesDesbloqueadas) { mostrarExclusividades(); return; }
@@ -96,12 +101,20 @@ modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) f
 
 senhaForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const digitada   = senhaInput.value.trim();
-  const hashDigitada = await hashSenha(digitada);
+  const digitada = senhaInput.value.trim();
 
-  if (hashDigitada === HASH_EXCLUSIVIDADES) {
+  const submitBtn = senhaForm.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Verificando…';
+
+  const token = await verificarSenha(digitada);
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'Entrar';
+
+  if (token) {
     exclusividadesDesbloqueadas = true;
-    sessionStorage.setItem('corazza_excl', '1');
+    sessionStorage.setItem('corazza_token', token);
     fecharModal();
     setTimeout(mostrarExclusividades, 300);
   } else {
@@ -121,7 +134,7 @@ modalContato.addEventListener('click', (e) => {
 
 document.getElementById('sairExclusividades').addEventListener('click', () => {
   exclusividadesDesbloqueadas = false;
-  sessionStorage.removeItem('corazza_excl');
+  sessionStorage.removeItem('corazza_token');
   exclusividadesArea.style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -252,26 +265,30 @@ contatoForm.addEventListener('submit', (e) => {
 });
 
 // ── ANIMAÇÕES DE ENTRADA ──
-const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const prefersReducedMotionAnim = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity   = '1';
-      entry.target.style.transform = 'translateY(0)';
-      observer.unobserve(entry.target);
-    }
+if (!prefersReducedMotionAnim) {
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity   = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll(
+    '.resultado-card, .bento-pilar, .bento-intro, .dep-card, .excl-card, .clube-beneficio, .processo-item-acc'
+  ).forEach(el => {
+    el.style.opacity   = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
   });
-}, observerOptions);
-
-document.querySelectorAll(
-  '.resultado-card, .bento-pilar, .bento-intro, .dep-card, .excl-card, .clube-beneficio, .processo-item-acc'
-).forEach(el => {
-  el.style.opacity   = '0';
-  el.style.transform = 'translateY(20px)';
-  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-  observer.observe(el);
-});
+}
 
 // ── SMOOTH SCROLL PARA LINKS INTERNOS ──
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
