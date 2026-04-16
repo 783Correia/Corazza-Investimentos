@@ -685,8 +685,9 @@ ul { list-style: none; }
 .sobre-img {
   width: 100%;
   aspect-ratio: 3 / 4;
-  object-fit: cover;
-  object-position: center 15%;
+  object-fit: contain;
+  object-position: center center;
+  background: #0a0a0a;
   border-radius: var(--radius);
   display: block;
 }
@@ -1720,7 +1721,7 @@ ul { list-style: none; }
 
   /* Sobre */
   .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .sobre-img { aspect-ratio: 4 / 3; }
+  .sobre-img { aspect-ratio: 3 / 4; }
   .sobre-badge { bottom: 1rem; right: 1rem; }
 
   /* Processo */
