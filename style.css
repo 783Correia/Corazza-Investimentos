@@ -684,10 +684,11 @@ ul { list-style: none; }
 .sobre-img-wrap { position: relative; }
 .sobre-img {
   width: 100%;
-  height: 600px;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center 15%;
   border-radius: var(--radius);
+  display: block;
 }
 .sobre-badge {
   position: absolute;
@@ -1599,7 +1600,6 @@ ul { list-style: none; }
   .resultados-grid { grid-template-columns: 1fr 1fr; }
   .excl-grid { grid-template-columns: 1fr 1fr; }
   .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .sobre-img { height: 480px; object-position: center 25%; }
   .sobre-badge { bottom: 1rem; right: 1rem; }
 }
 
@@ -1720,7 +1720,7 @@ ul { list-style: none; }
 
   /* Sobre */
   .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .sobre-img { height: 360px; object-position: center 30%; }
+  .sobre-img { aspect-ratio: 4 / 3; }
   .sobre-badge { bottom: 1rem; right: 1rem; }
 
   /* Processo */
