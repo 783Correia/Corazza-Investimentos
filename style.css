@@ -931,49 +931,42 @@ ul { list-style: none; }
   right: 1.5rem;
 }
 
-/* ── DEPOIMENTOS — SOBREPOSTOS ── */
+/* ── DEPOIMENTOS — CARROSSEL ── */
 .depoimentos {
   padding: 8rem 0;
   background: var(--bg2);
 }
-.dep-showcase {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin: 3.5rem 0 2rem;
-  align-items: start;
+.dep-carousel-wrap { margin: 3.5rem 0 2rem; }
+.dep-carousel-viewport {
+  overflow: hidden;
+  border-radius: var(--radius);
 }
-.dep-card {
+.dep-track {
+  display: flex;
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.dep-slide {
+  flex: 0 0 100%;
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(16px) saturate(160%);
   -webkit-backdrop-filter: blur(16px) saturate(160%);
   border: 1px solid rgba(255,255,255,0.8);
-  border-radius: 14px;
-  padding: 2.5rem;
-  transition: var(--transition);
+  border-radius: var(--radius);
+  padding: 3rem;
   box-shadow: 0 4px 24px rgba(0,0,0,0.06);
 }
-.dep-card:nth-child(2) {
-  margin-top: 2rem;
-}
-/* Terceiro card — quote curta: fonte maior para que a brevidade pareça intencional */
-.dep-card:nth-child(3) .dep-quote {
-  font-size: 1.45rem;
-  line-height: 1.6;
-}
-.dep-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); border-color: var(--border-strong); }
-.dep-quote {
+.dep-slide-quote {
   font-family: var(--font-serif);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-style: italic;
   font-weight: 300;
   color: var(--ink);
   line-height: 1.75;
-  margin-bottom: 1.75rem;
+  margin-bottom: 2rem;
   position: relative;
   padding-top: 2rem;
 }
-.dep-quote::before {
+.dep-slide-quote::before {
   content: '"';
   position: absolute;
   top: -0.75rem;
@@ -984,62 +977,42 @@ ul { list-style: none; }
   opacity: 0.3;
   line-height: 1;
 }
-.dep-author {
+.dep-slide-author {
   border-top: 1px solid var(--border);
   padding-top: 1.25rem;
 }
-.dep-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; }
-.dep-role { font-size: 12px; color: var(--ink3); }
-.dep-featured {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 3rem;
-  align-items: start;
-  background: var(--surface);
+.dep-slide-name { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; }
+.dep-slide-role { font-size: 12px; color: var(--ink3); }
+.dep-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.dep-arrow {
+  width: 44px; height: 44px;
+  border-radius: 50%;
   border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  padding: 2.5rem 3rem;
-  margin-top: 1.5rem;
-}
-.dep-featured-meta {
-  border-right: 1px solid var(--border);
-  padding-right: 3rem;
-}
-.dep-featured-name {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  font-weight: 500;
+  background: var(--surface);
   color: var(--ink);
-  margin-bottom: 0.4rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: var(--transition);
+  flex-shrink: 0;
 }
-.dep-featured-role {
-  font-size: 12px;
-  color: var(--ink3);
-  line-height: 1.5;
+.dep-arrow:hover:not(:disabled) { background: var(--ink); color: #fff; border-color: var(--ink); }
+.dep-arrow:disabled { opacity: 0.25; cursor: not-allowed; }
+.dep-dots-wrap { display: flex; gap: 0.5rem; align-items: center; }
+.dep-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  border: none; cursor: pointer; padding: 0;
+  transition: var(--transition);
 }
-.dep-featured-quote {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink);
-  line-height: 1.75;
-}
-
-@media (max-width: 768px) {
-  .dep-featured {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 2rem;
-  }
-  .dep-featured-meta {
-    border-right: none;
-    padding-right: 0;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1.25rem;
-  }
-}
-
+.dep-dot.active { width: 24px; border-radius: 3px; background: var(--ink); }
 .dep-note {
   text-align: center;
   font-size: 13px;
@@ -1779,8 +1752,7 @@ ul { list-style: none; }
   .inv-list-item.active { border-left: none; border-top-color: var(--gold); padding-left: 2rem; }
 
   /* Depoimentos */
-  .dep-showcase { grid-template-columns: 1fr; }
-  .dep-card:nth-child(2) { margin-top: 0; }
+  .dep-slide { padding: 2rem; }
 
   /* Clube */
   .clube-beneficios-row { grid-template-columns: 1fr; }
