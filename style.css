@@ -396,57 +396,49 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 
-/* ── MÉTODO — EDITORIAL LIST ── */
+/* ── MÉTODO — 3 COLUNAS EDITORIAL ── */
 .metodo {
   padding: 8rem 0;
   background: var(--bg);
 }
 .metodo-header {
   max-width: 680px;
-  margin-bottom: 2rem;
+  margin-bottom: 5rem;
 }
-.metodo-lead {
-  font-size: 17px;
-  color: var(--ink2);
-  line-height: 1.8;
-  max-width: 560px;
-  margin-bottom: 4rem;
-}
-.metodo-itens {
+.metodo-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid rgba(201,168,108,0.2);
 }
-.metodo-item {
-  display: grid;
-  grid-template-columns: 90px 1fr;
-  gap: 3rem;
-  padding: 2.75rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  transition: border-color 0.35s ease;
-  align-items: start;
+.mc-item {
+  padding: 3.5rem 3.5rem 3.5rem 0;
+  border-right: 1px solid rgba(255,255,255,0.05);
 }
-.metodo-item:hover { border-bottom-color: rgba(201,168,108,0.2); }
-.mi-num {
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  font-weight: 300;
+.mc-item:last-child { border-right: none; padding-right: 0; }
+.mc-item + .mc-item { padding-left: 3.5rem; }
+.mc-num {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   color: var(--gold);
-  letter-spacing: 0.12em;
-  padding-top: 0.25rem;
-  opacity: 0.7;
+  text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  opacity: 0.65;
 }
-.mi-body h4 {
+.mc-title {
   font-family: var(--font-serif);
-  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-size: clamp(1.3rem, 1.8vw, 1.75rem);
   font-weight: 400;
   color: var(--ink);
-  margin-bottom: 0.75rem;
   line-height: 1.25;
+  margin-bottom: 1.25rem;
 }
-.mi-body p {
-  font-size: 15px;
+.mc-desc {
+  font-size: 14px;
   color: var(--ink2);
-  line-height: 1.75;
-  max-width: 520px;
+  line-height: 1.8;
 }
 
 /* ── MÉTODO — VANTAGENS ── */
@@ -1696,7 +1688,10 @@ ul { list-style: none; }
   .scroll-hint { display: none; }
 
   /* Método */
-  .metodo-item { grid-template-columns: 60px 1fr; gap: 1.5rem; }
+  .metodo-cols { grid-template-columns: 1fr; }
+  .mc-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 0; }
+  .mc-item + .mc-item { padding-left: 0; }
+  .mc-item:last-child { border-bottom: none; }
 
   /* Resultados */
   .resultados-banner { grid-template-columns: 1fr; }
