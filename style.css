@@ -7,28 +7,31 @@
 
 :root {
   /* Backgrounds */
-  --bg:        #09090B;
-  --bg2:       #0E0E10;
-  --bg3:       #131315;
-  --surface:   #1A1A1D;
+  --bg:        #05050A;
+  --bg2:       #0A0A10;
+  --bg3:       #101018;
+  --surface:   #16161E;
 
   /* Texto */
-  --ink:       #EDE8DF;
-  --ink2:      rgba(237,232,223,0.62);
-  --ink3:      rgba(237,232,223,0.35);
+  --ink:       #EDE8DE;
+  --ink2:      rgba(237,232,222,0.60);
+  --ink3:      rgba(237,232,222,0.35);
 
-  /* Acento */
-  --gold:      #C9A96E;
-  --gold-light:#A88B57;
-  --gold-bg:   rgba(201,169,110,0.10);
+  /* Acento dourado */
+  --gold:         #C9A86C;
+  --gold-light:   #A88950;
+  --gold-dim:     rgba(201,168,108,0.18);
+  --gold-glow:    rgba(201,168,108,0.07);
+  --gold-bg:      rgba(201,168,108,0.10);
+  --border-gold:  rgba(201,168,108,0.20);
 
   /* Bordas */
-  --border:        rgba(255,255,255,0.07);
-  --border-strong: rgba(255,255,255,0.13);
+  --border:        rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.12);
 
   /* Utilitários para inline styles */
-  --cream:     #EDE8DF;
-  --cream-60:  rgba(237,232,223,0.6);
+  --cream:     #EDE8DE;
+  --cream-60:  rgba(237,232,222,0.6);
 
   /* Fonts */
   --font-serif: 'Cormorant Garamond', Georgia, serif;
@@ -410,7 +413,9 @@ ul { list-style: none; }
 }
 .bento-intro {
   grid-column: 1 / -1;
-  background: var(--bg2);
+  background: linear-gradient(135deg, rgba(201,168,108,0.06) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid var(--border-gold);
+  border-left: 2px solid var(--gold);
   border-radius: var(--radius);
   padding: 2.75rem 3rem;
   display: flex;
@@ -425,14 +430,14 @@ ul { list-style: none; }
 }
 .bento-pilar {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-gold);
   border-radius: var(--radius);
   padding: 2rem 2.25rem;
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 .bento-pilar:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border-color: rgba(201,168,108,0.45);
+  box-shadow: 0 4px 32px rgba(201,168,108,0.08), 0 0 0 1px rgba(201,168,108,0.15);
 }
 .bento-pilar-wide { grid-column: 1 / -1; }
 .bento-pilar-wide .pilar-content p { max-width: 520px; }
@@ -535,8 +540,8 @@ ul { list-style: none; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
+  background: var(--border-gold);
+  border: 1px solid var(--border-gold);
   border-radius: var(--radius);
   overflow: hidden;
   margin-bottom: 3rem;
@@ -545,7 +550,9 @@ ul { list-style: none; }
   background: var(--surface);
   padding: 2.5rem 2rem;
   text-align: center;
+  transition: background var(--transition);
 }
+.rb-item:hover { background: #1E1E28; }
 .rb-num {
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -570,22 +577,21 @@ ul { list-style: none; }
   margin: 0 auto 2rem;
 }
 .resultado-card {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.09);
+  background: var(--surface);
+  border: 1px solid var(--border-gold);
   border-radius: var(--radius);
   padding: 2rem;
-  box-shadow: 0 2px 24px rgba(0,0,0,0.4);
+  box-shadow: 0 2px 32px rgba(0,0,0,0.5);
   transition: border-color var(--transition), box-shadow var(--transition), transform 0.3s ease;
 }
 .resultado-card:hover {
-  border-color: rgba(201,169,110,0.3);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  border-color: rgba(201,168,108,0.45);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,168,108,0.12);
   transform: translateY(-3px);
 }
 .resultado-card.destaque-gold {
   border-color: var(--gold);
+  box-shadow: 0 4px 40px rgba(201,168,108,0.12);
 }
 .resultado-destaque-tag {
   font-size: 10px;
@@ -743,9 +749,10 @@ ul { list-style: none; }
   gap: 1rem;
   margin-bottom: 2.5rem;
   padding: 1.75rem;
-  background: var(--bg2);
+  background: var(--surface);
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-gold);
+  border-left: 2px solid var(--gold);
 }
 .credencial {
   display: flex;
@@ -953,13 +960,11 @@ ul { list-style: none; }
 }
 .dep-slide {
   flex: 0 0 100%;
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgba(255,255,255,0.09);
+  background: var(--surface);
+  border: 1px solid var(--border-gold);
   border-radius: var(--radius);
   padding: 3rem;
-  box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 40px rgba(0,0,0,0.5);
 }
 .dep-slide-quote {
   font-family: var(--font-serif);
@@ -1132,6 +1137,12 @@ ul { list-style: none; }
   color: var(--ink2);
   line-height: 1.8;
   margin-bottom: 2.5rem;
+}
+.contato-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 .contato-info { display: flex; flex-direction: column; gap: 1.25rem; }
 .contato-link {
@@ -1352,7 +1363,7 @@ ul { list-style: none; }
 }
 .excl-card {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-gold);
   border-radius: var(--radius);
   padding: 2rem;
   display: flex;
@@ -1360,8 +1371,8 @@ ul { list-style: none; }
   gap: 1.25rem;
   transition: var(--transition);
 }
-.excl-card:hover { border-color: var(--border-strong); box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
-.excl-card.featured { border-color: var(--gold); }
+.excl-card:hover { border-color: rgba(201,168,108,0.45); box-shadow: 0 4px 32px rgba(201,168,108,0.08); }
+.excl-card.featured { border-color: var(--gold); box-shadow: 0 4px 40px rgba(201,168,108,0.12); }
 .excl-card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
 .excl-status { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; }
 .excl-status.disponivel { color: #27ae60; }
@@ -1997,6 +2008,7 @@ ul { list-style: none; }
 .carta-aberta {
   padding: 7rem 0;
   background: var(--bg2);
+  border-top: 1px solid var(--border-gold);
 }
 .carta-inner {
   max-width: 740px;
@@ -2019,7 +2031,7 @@ ul { list-style: none; }
   font-weight: 300;
   font-style: italic;
   line-height: 1.85;
-  color: var(--ink);
+  color: rgba(237,232,222,0.85);
   text-align: left;
 }
 .carta-body p + p {
