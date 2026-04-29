@@ -2472,7 +2472,7 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   .nc-section { padding: 5rem 0; }
   .nc-section > .container { padding: 0 1.5rem; }
-  .nc-grid { grid-template-columns: repeat(2, 1fr); row-gap: 3rem; }
+  .nc-grid { grid-template-columns: repeat(2, 1fr); row-gap: 3rem; align-items: start; }
   .nc-col { padding: 0 2rem 0 0 !important; }
   .nc-col:nth-child(even) { padding: 0 0 0 2rem !important; }
   .nc-col--low { padding-top: 0 !important; }
