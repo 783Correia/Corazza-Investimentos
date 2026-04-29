@@ -1993,6 +1993,8 @@ ul { list-style: none; }
   .mc-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 2.5rem 0; }
   .mc-item + .mc-item { padding-left: 0; }
   .mc-item:last-child { border-bottom: none; }
+  .metodo-track-wrap { width: 100%; left: 0; transform: none; }
+  .metodo-track { padding: 0.25rem 1.25rem 1rem; }
 
   /* Resultados */
   .resultados-banner { grid-template-columns: 1fr; }
@@ -2029,6 +2031,7 @@ ul { list-style: none; }
   }
   .inv-list-item.active { border-left: none; border-top-color: var(--gold); }
   .inv-list-arrow { display: none; }
+  .inv-preview-title { font-size: clamp(1.5rem, 5vw, 2.2rem); }
 
   /* Depoimentos */
   .dep-slide { padding: 2rem 0; }
@@ -2062,6 +2065,9 @@ ul { list-style: none; }
 @media (max-width: 480px) {
   .container { padding: 0 1.25rem; }
   .section-title { font-size: clamp(1.9rem, 8vw, 2.5rem); }
+  .hero-content { padding-top: 4.5rem; padding-bottom: 3rem; }
+  .resultado-card { padding: 1.75rem; }
+  .resultados-discricao-inline { font-size: 13px; padding: 1rem 1.25rem; }
 }
 
 /* ── MANIFESTO ── */
