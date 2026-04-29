@@ -1997,8 +1997,10 @@ ul { list-style: none; }
   .metodo-track { padding: 0.25rem 1.25rem 1rem; }
 
   /* Resultados */
-  .resultados-banner { grid-template-columns: 1fr; }
   .resultados-grid { grid-template-columns: 1fr; }
+
+  /* Depoimentos */
+  .depoimentos { padding: 5rem 0; }
 
   /* Sobre */
   .sobre-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -2068,6 +2070,13 @@ ul { list-style: none; }
   .hero-content { padding-top: 4.5rem; padding-bottom: 3rem; }
   .resultado-card { padding: 1.75rem; }
   .resultados-discricao-inline { font-size: 13px; padding: 1rem 1.25rem; }
+
+  /* Banner de resultados: 3 colunas compactas */
+  .resultados-banner { grid-template-columns: repeat(3, 1fr); }
+  .rb-item { padding: 1.5rem 0.5rem 1.5rem 0; }
+  .rb-item + .rb-item { padding-left: 0.5rem; }
+  .rb-num { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+  .rb-label { font-size: 9px; letter-spacing: 0.08em; }
 }
 
 /* ── MANIFESTO ── */
