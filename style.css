@@ -482,8 +482,10 @@ ul { list-style: none; }
   margin-bottom: 4rem;
 }
 .metodo-track-wrap {
-  margin: 0 -2rem;
-  padding: 0 2rem;
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .metodo-track {
   display: flex;
@@ -492,14 +494,14 @@ ul { list-style: none; }
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 0.5rem;
+  padding: 0.25rem 2rem 1rem;
   cursor: grab;
 }
 .metodo-track::-webkit-scrollbar { display: none; }
 .metodo-track:active { cursor: grabbing; }
 .mc-card {
   position: relative;
-  flex: 0 0 280px;
+  flex: 0 0 300px;
   scroll-snap-align: start;
   background: var(--surface);
   border: 1px solid rgba(255,255,255,0.06);
