@@ -231,9 +231,7 @@ ul { list-style: none; }
 .navbar:not(.scrolled) .hamburger span { background: #fff; }
 
 .nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  display: none;
 }
 .nav-links a {
   font-size: 12px;
@@ -247,21 +245,100 @@ ul { list-style: none; }
 .nav-mobile-wa { display: none; }
 
 .hamburger {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 6px;
 }
 .hamburger span {
   display: block;
-  width: 22px;
-  height: 1.5px;
+  width: 24px;
+  height: 1px;
   background: var(--ink);
   transition: var(--transition);
 }
+.hamburger span:nth-child(3) { width: 16px; }
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 24px; }
+.hamburger span { transition: transform 0.3s ease, opacity 0.2s ease, width 0.2s ease; }
+
+/* ── PAINEL DE NAVEGAÇÃO (slide direita — todos os tamanhos) ── */
+.nav-links {
+  display: flex !important;
+  flex-direction: column;
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(340px, 88vw);
+  background: #0C0C0E;
+  border-left: 1px solid rgba(255,255,255,0.07);
+  z-index: 999;
+  padding: 2.5rem 3rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  pointer-events: none;
+  box-shadow: -12px 0 80px rgba(0,0,0,0.75);
+}
+.nav-links.open { transform: translateX(0); pointer-events: all; }
+.nav-links::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  right: min(340px, 88vw);
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.nav-links.open::before { opacity: 1; pointer-events: all; }
+.nav-links::after {
+  content: '◆  CORAZZA';
+  display: block;
+  order: -1;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(201,169,110,0.2);
+  width: 100%;
+}
+.nav-links li { width: 100%; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.nav-links li:last-child { border-bottom: none; }
+.nav-links a {
+  display: block;
+  padding: 1.1rem 0;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--ink2);
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+.nav-links a:hover { color: var(--ink); padding-left: 0.4rem; }
+.nav-mobile-wa {
+  display: flex !important;
+  margin-top: auto;
+  padding: 1rem 1.5rem !important;
+  width: 100%;
+  background: var(--gold);
+  color: #0A0A0B !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase;
+  justify-content: center;
+  border-radius: var(--radius);
+  border-bottom: none !important;
+}
+.nav-links li:has(.nav-mobile-wa) { border-bottom: none; }
 
 /* ── HERO ── */
 .hero {
@@ -1887,10 +1964,7 @@ ul { list-style: none; }
   .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
   .sobre-badge { bottom: 1rem; right: 1rem; }
 
-  /* Nav desktop → hamburger */
-  .nav-links { display: none; }
-  .btn-nav { display: none; }
-  .hamburger { display: flex; }
+  /* Nav já é hamburguer em todos os tamanhos */
 
   /* Hamburger X animation */
   .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -1898,89 +1972,7 @@ ul { list-style: none; }
   .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
   .hamburger span { transition: transform 0.3s ease, opacity 0.2s ease; }
 
-  /* Painel mobile */
-  .nav-links {
-    display: flex !important;
-    flex-direction: column;
-    position: fixed;
-    top: 0; right: 0; bottom: 0;
-    width: min(320px, 85vw);
-    background: #0E0E10;
-    border-left: 1px solid rgba(255,255,255,0.08);
-    z-index: 999;
-    padding: 2rem 2.5rem;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 0;
-    transform: translateX(100%);
-    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-    pointer-events: none;
-    box-shadow: -8px 0 60px rgba(0,0,0,0.7);
-  }
-  .nav-links.open { transform: translateX(0); pointer-events: all; }
-
-  /* Overlay escuro atrás do painel */
-  .nav-links::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    right: min(320px, 85vw);
-    background: rgba(0,0,0,0.4);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-  }
-  .nav-links.open::before { opacity: 1; pointer-events: all; }
-
-  /* Logo no painel */
-  .nav-links::after {
-    content: '◆  CORAZZA';
-    display: block;
-    order: -1;
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    color: var(--ink);
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-    width: 100%;
-  }
-
-  .nav-links li { width: 100%; border-bottom: 1px solid var(--border); }
-  .nav-links a {
-    display: block;
-    padding: 1.1rem 0;
-    font-size: 15px;
-    font-weight: 400;
-    letter-spacing: 0.02em;
-    color: var(--ink2);
-    transition: color 0.2s ease, padding-left 0.2s ease;
-  }
-  .nav-links a:hover, .nav-links a:active { color: var(--ink); padding-left: 0.5rem; }
-
-  /* Mobile WA button */
-  .nav-mobile-wa {
-    display: flex !important;
-    margin-top: auto;
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
-    width: 100%;
-    background: var(--gold);
-    color: #0A0A0B !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.1em !important;
-    text-transform: uppercase;
-    text-align: center;
-    justify-content: center;
-    border-radius: var(--radius);
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-    border-bottom: none !important;
-  }
-  .nav-links li:has(.nav-mobile-wa) { border-bottom: none; }
+  /* placeholder — painel movido para fora do media query */
 }
 
 @media (max-width: 768px) {
