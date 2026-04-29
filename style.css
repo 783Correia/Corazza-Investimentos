@@ -2426,9 +2426,8 @@ ul { list-style: none; }
   color: var(--ink3);
   line-height: 1.6;
 }
-/* foot sempre na parte inferior da coluna — alinha horizontalmente */
 .nc-foot {
-  margin-top: auto;
+  margin-top: 2.5rem;
   padding-top: 2rem;
   border-top: 1px solid rgba(201,168,108,0.12);
   display: flex;
