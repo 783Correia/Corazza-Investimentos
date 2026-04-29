@@ -163,64 +163,62 @@ accordionItems.forEach(item => {
 // ── INVESTIMENTOS — SELECTED PROJECTS ──
 const invProjects = [
   {
-    img:    'images/palazzo-hero.png',
-    alt:    'Palazzo Giardino',
-    tag:    'Pré-lançamento',
-    title:  'Palazzo Giardino',
-    stat1:  { val: '132m²',        label: 'Área privativa' },
-    stat2:  { val: 'R$15.628/m²',  label: 'Valor/m²' },
-    stat3:  { val: '–40%',         label: 'vs. mercado' },
+    img:   'images/palazzo-hero.png',
+    alt:   'Palazzo Giardino',
+    tag:   'Pré-lançamento',
+    title: 'Palazzo Giardino',
+    stat1: { val: '132m²',       label: 'Área privativa' },
+    stat2: { val: 'R$15.628/m²', label: 'Valor/m²' },
+    stat3: { val: '–40%',        label: 'vs. mercado' },
   },
   {
-    img:    'images/vivapark-hero.jpg',
-    alt:    'Viva Park Corporate',
-    tag:    'Última unidade',
-    title:  'Viva Park Corporate',
-    stat1:  { val: '41,56m²',      label: 'Área' },
-    stat2:  { val: '23º andar',    label: 'Vista Parque' },
-    stat3:  { val: '80k/mês',      label: 'Visitantes' },
+    img:   'images/vivapark-hero.jpg',
+    alt:   'Viva Park Corporate',
+    tag:   'Última unidade',
+    title: 'Viva Park Corporate',
+    stat1: { val: '41,56m²',  label: 'Área' },
+    stat2: { val: '23º andar', label: 'Vista Parque' },
+    stat3: { val: '80k/mês',  label: 'Visitantes' },
   },
   {
-    img:    'images/paesaggio-hero.jpg',
-    alt:    'Paesaggio Residencial',
-    tag:    'Pronto para morar',
-    title:  'Paesaggio Residencial',
-    stat1:  { val: '131m²',        label: 'Área privativa' },
-    stat2:  { val: 'R$21.374/m²',  label: 'Valor/m²' },
-    stat3:  { val: '–27%',         label: 'vs. teto de mercado' },
+    img:   'images/paesaggio-hero.jpg',
+    alt:   'Paesaggio Residencial',
+    tag:   'Pronto para morar',
+    title: 'Paesaggio Residencial',
+    stat1: { val: '131m²',       label: 'Área privativa' },
+    stat2: { val: 'R$21.374/m²', label: 'Valor/m²' },
+    stat3: { val: '–27%',        label: 'vs. teto de mercado' },
   },
 ];
 
-const invListItems  = document.querySelectorAll('.inv-list-item');
-const invPreviewImg = document.getElementById('invPreviewImg');
-const invPreviewTag = document.getElementById('invPreviewTag');
+const invListItems    = document.querySelectorAll('.inv-list-item');
+const invPreviewImg   = document.getElementById('invPreviewImg');
+const invPreviewTag   = document.getElementById('invPreviewTag');
 const invPreviewTitle = document.getElementById('invPreviewTitle');
-const invStat1Val   = document.getElementById('invStat1Val');
-const invStat1Label = document.getElementById('invStat1Label');
-const invStat2Val   = document.getElementById('invStat2Val');
-const invStat2Label = document.getElementById('invStat2Label');
-const invStat3Val   = document.getElementById('invStat3Val');
-const invStat3Label = document.getElementById('invStat3Label');
+const invStat1Val     = document.getElementById('invStat1Val');
+const invStat1Label   = document.getElementById('invStat1Label');
+const invStat2Val     = document.getElementById('invStat2Val');
+const invStat2Label   = document.getElementById('invStat2Label');
+const invStat3Val     = document.getElementById('invStat3Val');
+const invStat3Label   = document.getElementById('invStat3Label');
 
 function updatePreview(index) {
   const p = invProjects[index];
   if (!p || !invPreviewImg) return;
-
   invPreviewImg.style.opacity = '0';
   setTimeout(() => {
-    invPreviewImg.src       = p.img;
-    invPreviewImg.alt       = p.alt;
-    invPreviewTag.textContent   = p.tag;
-    invPreviewTitle.textContent = p.title;
-    invStat1Val.textContent     = p.stat1.val;
-    invStat1Label.textContent   = p.stat1.label;
-    invStat2Val.textContent     = p.stat2.val;
-    invStat2Label.textContent   = p.stat2.label;
-    invStat3Val.textContent     = p.stat3.val;
-    invStat3Label.textContent   = p.stat3.label;
-    invPreviewImg.style.opacity = '1';
+    invPreviewImg.src             = p.img;
+    invPreviewImg.alt             = p.alt;
+    invPreviewTag.textContent     = p.tag;
+    invPreviewTitle.textContent   = p.title;
+    invStat1Val.textContent       = p.stat1.val;
+    invStat1Label.textContent     = p.stat1.label;
+    invStat2Val.textContent       = p.stat2.val;
+    invStat2Label.textContent     = p.stat2.label;
+    invStat3Val.textContent       = p.stat3.val;
+    invStat3Label.textContent     = p.stat3.label;
+    invPreviewImg.style.opacity   = '1';
   }, 250);
-
   invListItems.forEach((item, i) => item.classList.toggle('active', i === index));
 }
 
@@ -228,41 +226,26 @@ invListItems.forEach((item, i) => {
   item.addEventListener('click', () => updatePreview(i));
 });
 
-// ── FORMULÁRIO DE CONTATO ──
+// ── FORMULÁRIO DE CONTATO (opcional — seção usa WhatsApp direto) ──
 const contatoForm = document.getElementById('contatoForm');
-contatoForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const sanitize = (str) => str.replace(/[\n\r]/g, ' ').replace(/[*_~`]/g, '').trim();
-
-  const nome      = sanitize(document.getElementById('nome').value);
-  const whatsapp  = sanitize(document.getElementById('whatsapp').value);
-  const interesse = document.getElementById('interesse').value;
-  const mensagem  = sanitize(document.getElementById('mensagem').value);
-
-  const interesses = {
-    investimento: 'Investimento imobiliário',
-    clube:        'Clube Corazza',
-    mentoria:     'Mentoria',
-    parceria:     'Parceria',
-    '':           'Geral'
-  };
-
-  const texto = `Olá Dieison! Vim pelo site Corazza.\n\n*Nome:* ${nome}\n*WhatsApp:* ${whatsapp}\n*Interesse:* ${interesses[interesse] || 'Geral'}${mensagem ? `\n*Mensagem:* ${mensagem}` : ''}`;
-  const url   = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`;
-  window.open(url, '_blank');
-
-  const btn = contatoForm.querySelector('button[type="submit"]');
-  const originalText = btn.textContent;
-  btn.textContent = 'Mensagem enviada ✓';
-  btn.style.background = '#27ae60';
-
-  setTimeout(() => {
-    btn.textContent   = originalText;
-    btn.style.background = '';
-    contatoForm.reset();
-  }, 3000);
-});
+if (contatoForm) {
+  contatoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const sanitize = (str) => str.replace(/[\n\r]/g, ' ').replace(/[*_~`]/g, '').trim();
+    const nome      = sanitize(document.getElementById('nome').value);
+    const whatsapp  = sanitize(document.getElementById('whatsapp').value);
+    const interesse = document.getElementById('interesse').value;
+    const mensagem  = sanitize(document.getElementById('mensagem').value);
+    const interesses = { investimento: 'Investimento imobiliário', clube: 'Clube Corazza', mentoria: 'Mentoria', parceria: 'Parceria', '': 'Geral' };
+    const texto = `Olá Dieison! Vim pelo site Corazza.\n\n*Nome:* ${nome}\n*WhatsApp:* ${whatsapp}\n*Interesse:* ${interesses[interesse] || 'Geral'}${mensagem ? `\n*Mensagem:* ${mensagem}` : ''}`;
+    window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(texto)}`, '_blank');
+    const btn = contatoForm.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.textContent = 'Mensagem enviada ✓';
+    btn.style.background = '#27ae60';
+    setTimeout(() => { btn.textContent = originalText; btn.style.background = ''; contatoForm.reset(); }, 3000);
+  });
+}
 
 // ── ANIMAÇÕES DE ENTRADA ──
 const prefersReducedMotionAnim = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -288,6 +271,7 @@ if (!prefersReducedMotionAnim) {
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
   });
+
 }
 
 // ── SMOOTH SCROLL PARA LINKS INTERNOS ──
