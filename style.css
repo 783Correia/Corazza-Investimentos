@@ -2365,3 +2365,23 @@ ul { list-style: none; }
   .dep-carousel-wrap { gap: 0.75rem; }
   .dep-arrow { width: 36px; height: 36px; font-size: 14px; flex-shrink: 0; }
 }
+
+/* ── BLUR-REVEAL SCROLL ANIMATION ── */
+.blur-reveal {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(18px);
+  transition:
+    opacity  0.85s ease var(--br-delay, 0s),
+    filter   0.85s ease var(--br-delay, 0s),
+    transform 0.7s  ease var(--br-delay, 0s);
+  will-change: opacity, filter, transform;
+}
+.blur-reveal.is-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .blur-reveal { opacity: 1 !important; filter: none !important; transform: none !important; transition: none !important; }
+}

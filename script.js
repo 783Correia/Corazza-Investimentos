@@ -352,3 +352,17 @@ window.addEventListener('scroll', () => {
   backToTop.classList.toggle('visible', window.scrollY > 500);
 }, { passive: true });
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ── BLUR-REVEAL SCROLL ANIMATION ──
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const blurObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        blurObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.blur-reveal').forEach(el => blurObserver.observe(el));
+}
