@@ -353,6 +353,48 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+// ── TYPEWRITER — MANIFESTO ──
+(function () {
+  const el = document.querySelector('.manifesto-text');
+  if (!el) return;
+
+  const fullHTML = el.innerHTML;
+  const plainText = el.textContent;
+
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  cursor.textContent = '|';
+
+  let triggered = false;
+
+  const tw = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || triggered) return;
+    triggered = true;
+    tw.disconnect();
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return; // deixa o HTML original intacto
+    }
+
+    el.textContent = '';
+    el.appendChild(cursor);
+
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < plainText.length) {
+        el.insertBefore(document.createTextNode(plainText[i]), cursor);
+        i++;
+      } else {
+        clearInterval(interval);
+        cursor.remove();
+        el.innerHTML = fullHTML; // restaura <strong>/<em>
+      }
+    }, 18);
+  }, { threshold: 0.3 });
+
+  tw.observe(el);
+})();
+
 // ── BLUR-REVEAL SCROLL ANIMATION ──
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const blurObserver = new IntersectionObserver((entries) => {
