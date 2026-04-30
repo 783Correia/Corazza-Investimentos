@@ -353,50 +353,19 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-// ── TYPEWRITER — MANIFESTO ──
-(function () {
-  const el = document.querySelector('.manifesto-text');
-  if (!el) return;
-
-  const fullHTML  = el.innerHTML;
-  const plainText = el.innerText; // preserva \n dos <br>
-
-  const cursor = document.createElement('span');
-  cursor.className = 'typing-cursor';
-  cursor.textContent = '|';
-
-  let triggered = false;
-
-  const tw = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting || triggered) return;
-    triggered = true;
-    tw.disconnect();
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    el.textContent = '';
-    el.appendChild(cursor);
-
-    let i = 0;
-    const interval = setInterval(() => {
-      if (i < plainText.length) {
-        const ch = plainText[i];
-        if (ch === '\n') {
-          el.insertBefore(document.createElement('br'), cursor);
-        } else {
-          el.insertBefore(document.createTextNode(ch), cursor);
-        }
-        i++;
-      } else {
-        clearInterval(interval);
-        cursor.remove();
-        el.innerHTML = fullHTML; // restaura <strong>/<em>/<br>
+// ── REVEAL — MANIFESTO ──
+const manifesto = document.querySelector('.manifesto-text');
+if (manifesto) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    manifesto.classList.add('is-visible');
+  } else {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        manifesto.classList.add('is-visible');
       }
-    }, 6);
-  }, { threshold: 0.3 });
-
-  tw.observe(el);
-})();
+    }, { threshold: 0.2 }).observe(manifesto);
+  }
+}
 
 // ── BLUR-REVEAL SCROLL ANIMATION ──
 if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {

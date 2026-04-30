@@ -2095,20 +2095,23 @@ ul { list-style: none; }
   max-width: 780px;
   margin: 0 auto;
   color: var(--ink);
-  min-height: 6em;
 }
 .manifesto-text strong { font-weight: 600; }
-.typing-cursor {
-  display: inline-block;
-  color: var(--gold);
-  font-weight: 300;
-  margin-left: 1px;
-  animation: cur-blink 0.65s step-end infinite;
+.mf-line {
+  overflow: hidden;
+  margin: 0 0 1.2em;
 }
-@keyframes cur-blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+.mf-line:last-child { margin-bottom: 0; }
+.mf-inner {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
 }
+.manifesto-text.is-visible .mf-inner { transform: translateY(0); }
+.manifesto-text.is-visible .mf-line:nth-child(1) .mf-inner { transition-delay: 0s; }
+.manifesto-text.is-visible .mf-line:nth-child(2) .mf-inner { transition-delay: 0.2s; }
+.manifesto-text.is-visible .mf-line:nth-child(3) .mf-inner { transition-delay: 0.4s; }
+.manifesto-text.is-visible .mf-line:nth-child(4) .mf-inner { transition-delay: 0.65s; }
 
 /* ── QUALIFICAÇÃO ── */
 .qualificacao {
