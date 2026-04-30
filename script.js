@@ -358,8 +358,8 @@ backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 's
   const el = document.querySelector('.manifesto-text');
   if (!el) return;
 
-  const fullHTML = el.innerHTML;
-  const plainText = el.textContent;
+  const fullHTML  = el.innerHTML;
+  const plainText = el.innerText; // preserva \n dos <br>
 
   const cursor = document.createElement('span');
   cursor.className = 'typing-cursor';
@@ -372,9 +372,7 @@ backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 's
     triggered = true;
     tw.disconnect();
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return; // deixa o HTML original intacto
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     el.textContent = '';
     el.appendChild(cursor);
@@ -382,14 +380,19 @@ backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 's
     let i = 0;
     const interval = setInterval(() => {
       if (i < plainText.length) {
-        el.insertBefore(document.createTextNode(plainText[i]), cursor);
+        const ch = plainText[i];
+        if (ch === '\n') {
+          el.insertBefore(document.createElement('br'), cursor);
+        } else {
+          el.insertBefore(document.createTextNode(ch), cursor);
+        }
         i++;
       } else {
         clearInterval(interval);
         cursor.remove();
-        el.innerHTML = fullHTML; // restaura <strong>/<em>
+        el.innerHTML = fullHTML; // restaura <strong>/<em>/<br>
       }
-    }, 18);
+    }, 6);
   }, { threshold: 0.3 });
 
   tw.observe(el);
