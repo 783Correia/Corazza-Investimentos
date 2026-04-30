@@ -359,11 +359,14 @@ if (manifesto) {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     manifesto.classList.add('is-visible');
   } else {
-    new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        manifesto.classList.add('is-visible');
-      }
-    }, { threshold: 0.2 }).observe(manifesto);
+    requestAnimationFrame(() => {
+      new IntersectionObserver(([e], obs) => {
+        if (e.isIntersecting) {
+          manifesto.classList.add('is-visible');
+          obs.disconnect();
+        }
+      }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' }).observe(manifesto);
+    });
   }
 }
 
